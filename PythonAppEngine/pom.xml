@@ -1,0 +1,309 @@
+<?server.xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Specify hard-coded project properties here-->
+    <properties>
+
+        <!-- put your app name here -->
+	   <app.name>PythonAppEngine</app.name>
+
+        <!-- put your app group id here -->
+	   <group.id>PythonAppEngine</group.id>
+
+        <!-- put your app artifact id here -->
+	   <artifact.id>PythonAppEngine</artifact.id>
+
+        <!-- This is just for "eclipse:eclipse" goal to always attempt downloading sources -->
+        <downloadSources>true</downloadSources>
+        
+        <!-- Specify AppEngine version for your project. It should match SDK version pointed to
+            by ${gae.home} property (Typically, one used by your Eclipse plug-in) -->
+        <gae.version>1.4.0</gae.version>
+        
+        <!-- GWT version -->
+        <gwt.version>2.3.0</gwt.version>
+
+        <!-- Upload to http://test.latest.<applicationName>.appspot.com by default -->
+        <gae.application.version>test</gae.application.version>
+
+        <!-- port defaults to 8080 -->
+        <gae.port>8080</gae.port>
+
+        <!-- Produce detailed JS during GWT compilation for development environment -->
+        <gwt.style>DETAILED</gwt.style>
+    </properties>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <groupId>${group.id}</groupId>
+    <artifactId>${artifact.id}</artifactId>
+    <name>${app.name}</name>
+
+
+    <!-- Standard Project Dependencies -->
+    <dependencies>
+        <!-- JUnit for Unit Testing -->
+        <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.8.2</version>
+          <type>jar</type>
+          <scope>test</scope>
+          <optional>true</optional>
+        </dependency>
+
+
+
+        <!-- GWT dependencies -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- END GWT-->
+
+        <!-- J2EE Servlet API. We need it to compile IndexServlet class. You can probably remove
+            it, if you don't explicitly use Servlets -->
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_2.5_spec</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Make use of JSP tags. Remove, if you don't use JSPs -->
+        <dependency>
+            <artifactId>standard</artifactId>
+            <groupId>taglibs</groupId>
+            <version>1.1.2</version>
+            <type>jar</type>
+            <scope>runtime</scope>
+        </dependency>
+
+  
+
+    </dependencies>
+
+<build>
+        <plugins>
+             <!-- Data Nucleus is a a Java data management platform (like Hibernate)-->
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>maven-datanucleus-plugin</artifactId>
+                <version>1.1.4</version>
+                <configuration>
+                    <mappingIncludes>**/model/*.class</mappingIncludes>
+                    <verbose>true</verbose>
+                    <enhancerName>ASM</enhancerName>
+                    <api>JDO</api>
+                </configuration>
+                <executions>
+                  <!--    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution> -->
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-core</artifactId>
+                        <version>1.1.5</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>javax.transaction</groupId>
+                                <artifactId>transaction-api</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-rdbms</artifactId>
+                        <version>1.1.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-enhancer</artifactId>
+                        <version>1.1.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.jdo</groupId>
+                        <artifactId>jdo2-api</artifactId>
+                        <version>2.3-eb</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-jpa</artifactId>
+                        <version>1.1.5</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Maven WAR plugin. Declare Web Resource Directory -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>*.xml</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Google Web Toolkit (GWT) plugin
+                    (ex. http://gwt-maven.googlecode.com/svn/docs/maven-googlewebtoolkit2-plugin/index.html)
+                    http://mojo.codehaus.org/gwt-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>2.3.0-1</version>
+                <configuration>
+                    <logLevel>INFO</logLevel>
+
+                    <!-- match -Dgae.port -->
+                    <port>${gae.port}</port>
+
+                    <!-- This is for generating Asynch interfaces -->
+                    <!-- <servicePattern>**/client/*Service.java</servicePattern> -->
+
+                    <extraJvmArgs>-Xmx512m</extraJvmArgs>
+                    <!--<jvm>${JAVA_HOME}/bin/java</jvm> -->
+                    <!--<noServer>false</noServer> -->
+                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
+
+                    <runTarget>/PythonAppEngine.html</runTarget>
+                    <style>DETAILED</style>
+                    <webXml>webapp/WEB-INF/web.xml</webXml>
+                </configuration>
+                <executions>
+                    <!-- <execution> <id>generateAsynch</id> <phase>generate-sources</phase> <goals>
+                        <goal>generateAsync</goal> </goals> </execution> 
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>-->
+                </executions>
+            </plugin>
+
+            <!-- Maven Google AppEngine (GAE) Plugin-->
+            <plugin>
+                <groupId>net.kindleit</groupId>
+                <artifactId>maven-gae-plugin</artifactId>
+                <version>0.8.1</version>
+                <configuration>
+                    <jvmFlags>
+                        <jvmFlag>-Xdebug</jvmFlag>
+                        <jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
+                        <jvmFlag>-Dmail.log_mail_level=WARNING</jvmFlag>
+                        <jvmFlag>-Dmail.log_mail_body=true</jvmFlag>
+                    </jvmFlags>
+                    <serverId>appengine.google.com</serverId>
+                    <severity>0</severity>
+                    <serverId>funny-pages</serverId>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.kindleit</groupId>
+                        <artifactId>gae-runtime</artifactId>
+                        <version>${gae.version}</version>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Upload application to the appspot automatically, during release:perform -->
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <goals>gae:deploy</goals>
+                </configuration>
+            </plugin>
+
+            <!-- Java compiler version -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+	<profiles>
+        <!-- Declare default-tools. Just for sanity
+	    <profile>
+	      <id>default-tools.jar</id>
+	      <activation>
+	        <property>
+	          <name>java.vendor</name>
+	          <value>Sun Microsystems Inc.</value>
+	        </property>
+	      </activation>
+	      <dependencies>
+	        <dependency>
+	          <groupId>com.sun</groupId>
+	          <artifactId>tools</artifactId>
+	          <version>1.6</version>
+	          <scope>system</scope>
+	          <systemPath>${java.home}/../lib/tools.jar</systemPath>
+	        </dependency>
+	      </dependencies>
+	    </profile> -->
+
+       <!-- We can configure our integration server to activate this profile and perform gae:deploy,
+            thus uploading latest snapshot to the http://1.latest.<applicationName>.appspot.com automatically -->
+        <profile>
+            <id>integration-build</id>
+            <properties>
+                <gae.application.version>stage</gae.application.version>
+
+                <!-- Produce pretty JS during GWT compilation for test environment -->
+                <gwt.style>PRETTY</gwt.style>
+            </properties>
+        </profile>
+
+        <!-- This profile will activate automatically during release and upload application to
+            the http://2.latest.<applicationName>.appspot.com (We might want to set the 2nd version as
+            our applications Default version to be accessible at http://<applicationName>.appspot.com) -->
+        <profile>
+            <id>release-build</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
+            <properties>
+                <!-- During release, set application version in appengine-web.xml to 2 -->
+                <gae.application.version>release</gae.application.version>
+
+                <!-- Produce compressed JS during GWT compilation for production environment -->
+                <gwt.style>OBFUSCATED</gwt.style>
+            </properties>
+        </profile>
+    </profiles>
+  </project>
