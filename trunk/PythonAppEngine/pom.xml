@@ -28,7 +28,7 @@
         <gae.application.version>test</gae.application.version>
 
         <!-- port defaults to 8080 -->
-        <gae.port>8080</gae.port>
+        <gae.port>9999</gae.port>
 
         <!-- Produce detailed JS during GWT compilation for development environment -->
         <gwt.style>DETAILED</gwt.style>
@@ -253,7 +253,7 @@
 
 
 	<profiles>
-        <!-- Declare default-tools. Just for sanity
+        <!-- Declare default-tools. Just for sanity  -->
 	    <profile>
 	      <id>default-tools.jar</id>
 	      <activation>
@@ -271,7 +271,7 @@
 	          <systemPath>${java.home}/../lib/tools.jar</systemPath>
 	        </dependency>
 	      </dependencies>
-	    </profile> -->
+	    </profile>
 
        <!-- We can configure our integration server to activate this profile and perform gae:deploy,
             thus uploading latest snapshot to the http://1.latest.<applicationName>.appspot.com automatically -->

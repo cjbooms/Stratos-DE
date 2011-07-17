@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.gmail.cjbooms.thesis.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>com.gmail.cjbooms.thesis.pythonappengine.server.GreetingServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
