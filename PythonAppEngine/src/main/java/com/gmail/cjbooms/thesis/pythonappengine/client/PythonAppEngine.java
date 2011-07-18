@@ -1,28 +1,13 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client;
 
-import com.gmail.cjbooms.thesis.pythonappengine.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.*;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -37,10 +22,7 @@ public class PythonAppEngine implements EntryPoint {
 		+ "connection and try again.";
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
-	 */
-	private final GreetingServiceAsync greetingService = GWT
-	.create(GreetingService.class);
+
 
 	/**
 	 * This is the entry point method.
@@ -86,116 +68,74 @@ public class PythonAppEngine implements EntryPoint {
 
 		// Add Scroll Panel for Text Editor
 		ScrollPanel contentScrollPanel = new ScrollPanel();
-		textEditorPanel.addWest(contentScrollPanel, 33.8);
+		textEditorPanel.addWest(contentScrollPanel, 100.0);
 
-		//Add 
-		VerticalPanel verticalPanel = new VerticalPanel();
-		contentScrollPanel.setWidget(verticalPanel);
-		verticalPanel.setSize("100%", "317px");
-		verticalPanel.add(sendButton);
+		//Add Panel Holder For Edit Area
+		VerticalPanel editAreaMainPanel = new VerticalPanel();
+		contentScrollPanel.setWidget(editAreaMainPanel);
 
-		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
-		verticalPanel.add(nameField);
 
-		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
+        VerticalPanel editAreaContentPanel = new VerticalPanel();
 
-		verticalPanel.add(errorLabel);
-		nameField.selectAll();
 
-		RootLayoutPanel.get().add(rootPanel);
-		
-		// Create the popup dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Remote Procedure Call");
-		dialogBox.setAnimationEnabled(true);
-		final Button closeButton = new Button("Close");
-		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
-		final Label textToServerLabel = new Label();
-		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
+        // Creation of the sample SourceCodeEditor. In the constructor we say wich syntax we want to edit.
+		final SourceCodeEditor editor = new SourceCodeEditor("python");
 
-		// Add a handler to close the DialogBox
-		closeButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
-			}
-		});
+	    // Seting an initial content for the editor.
+		editor.setText("import unittest\n" +
+                "from ChessBoard import *\n" +
+                "\n" +
+                "class GetLastMoveTest(unittest.TestCase):\n" +
+                "\n" +
+                "    def testGetLastMove(self):\n" +
+                "        \"\"\"\n" +
+                "        Test the behaviour of getLastMove for a valid move.\n" +
+                "        The expected result should be returned.\n" +
+                "        \"\"\"\n" +
+                "        chessboard = ChessBoard()\n" +
+                "        chessboard.resetBoard()\n" +
+                "        expectedResult = ((4, 6), (4, 5))\n" +
+                "        chessboard.addMove(expectedResult[0],expectedResult[1])\n" +
+                "        result = chessboard.getLastMove()\n" +
+                "        self.assertEqual(expectedResult[0],result[0])\n" +
+                "        self.assertEqual(expectedResult[1],result[1])\n" +
+                "        \n" +
+                "    def testGetLastMove_noMovesMade(self):\n" +
+                "        \"\"\"\n" +
+                "        Test the behaviour of getLastMove when no moves have been made.\n" +
+                "        None should be returned.\n" +
+                "        \"\"\"\n" +
+                "        chessboard = ChessBoard()\n" +
+                "        chessboard.resetBoard()\n" +
+                "        result = chessboard.getLastMove()\n" +
+                "        self.assertEqual(None,result)\n" +
+                "        ");
 
-		// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
-			 * Fired when the user clicks on the sendButton.
-			 */
-			public void onClick(ClickEvent event) {
-				sendNameToServer();
-			}
 
-			/**
-			 * Fired when the user types in the nameField.
-			 */
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					sendNameToServer();
-				}
-			}
+		// Creation of a button that will show the content of the editor
+		Button b = new Button("Show content", new ClickHandler()
+			{public void onClick(ClickEvent event) {
+                Window.alert("The editor content is:\n\n" + editor.getText());}});
 
-			/**
-			 * Send the name from the nameField to the server and wait for a response.
-			 */
-			private void sendNameToServer() {
-				// First, we validate the input.
-				errorLabel.setText("");
-				String textToServer = nameField.getText();
-				if (!FieldVerifier.isValidName(textToServer)) {
-					errorLabel.setText("Please enter at least four characters");
-					return;
-				}
+		//BEGIN: Creation of the screen layout
+		editAreaContentPanel.add(new HTML("<br /><b>SourceCode Showcase</b><br /><br />"));
+		editAreaContentPanel.add(editor);
+		editAreaContentPanel.add(b);
 
-				// Then, we send the input to the server.
-				sendButton.setEnabled(false);
-				textToServerLabel.setText(textToServer);
-				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
-						new AsyncCallback<String>() {
-					public void onFailure(Throwable caught) {
-						// Show the RPC error message to the user
-						dialogBox
-						.setText("Remote Procedure Call - Failure");
-						serverResponseLabel
-						.addStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(SERVER_ERROR);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
+		editAreaContentPanel.setCellHorizontalAlignment(b, HasHorizontalAlignment.ALIGN_RIGHT);
 
-					public void onSuccess(String result) {
-						dialogBox.setText("Remote Procedure Call");
-						serverResponseLabel
-						.removeStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(result);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
-				});
-			}
-		}
+        editAreaMainPanel.add(editAreaContentPanel);
+        editAreaMainPanel.setCellHorizontalAlignment(editAreaContentPanel, HasHorizontalAlignment.ALIGN_CENTER);
 
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler);
+
+		editAreaMainPanel.setWidth("100%");
+		editAreaContentPanel.setWidth("90%");
+		editor.setWidth("100%");
+		editor.setHeight("300px");
+
+	    RootLayoutPanel.get().add(rootPanel);
+		//END: Creation of the screen layout
+
+
 	}
 }

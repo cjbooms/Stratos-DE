@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.gmail.cjbooms.thesis.pythonappengine.client;
+package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

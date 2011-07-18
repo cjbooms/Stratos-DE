@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.cjbooms.thesis.pythonappengine.client.wdgets;
+package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.wdgets;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,10 +16,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.gmail.cjbooms.thesis.pythonappengine.client.FileSystemService;
-import com.gmail.cjbooms.thesis.pythonappengine.client.FileSystemServiceAsync;
-import com.gmail.cjbooms.thesis.pythonappengine.client.FileType;
-import com.gmail.cjbooms.thesis.pythonappengine.client.FileWrapper;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemService;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemServiceAsync;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileType;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileWrapper;
 
 /**
  *
