@@ -4,9 +4,17 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+    <servlet>
+        <servlet-name>com.gmail.cjbooms.thesis.pythonappengine.PythonAppEngine FileSystemService</servlet-name>
+        <servlet-class>com.gmail.cjbooms.thesis.pythonappengine.server.FileSystemServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>com.gmail.cjbooms.thesis.pythonappengine.PythonAppEngine FileSystemService</servlet-name>
+        <url-pattern>/pythonappengine/fs</url-pattern>
+    </servlet-mapping>
 
-  
-  <!-- Default page to serve -->
+
+    <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>PythonAppEngine.html</welcome-file>
   </welcome-file-list>
