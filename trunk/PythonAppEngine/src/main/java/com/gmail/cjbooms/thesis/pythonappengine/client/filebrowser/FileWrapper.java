@@ -1,4 +1,4 @@
-package com.gmail.cjbooms.thesis.pythonappengine.client;
+package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 import java.io.Serializable;
 /**

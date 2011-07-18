@@ -1,6 +1,5 @@
 package com.gmail.cjbooms.thesis.pythonappengine.server;
 
-import com.gmail.cjbooms.thesis.pythonappengine.client.GreetingService;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
