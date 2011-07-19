@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.wdgets;
+package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.OpenEvent;
