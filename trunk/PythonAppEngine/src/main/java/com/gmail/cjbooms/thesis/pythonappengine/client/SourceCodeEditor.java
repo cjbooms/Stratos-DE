@@ -1,6 +1,7 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client;
 
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -99,18 +100,28 @@ public class SourceCodeEditor extends Composite
 			word_wrap       : true,
 			language        : "en",
 			syntax          : syntax,
-            toolbar: "new_document, save, load, |, charmap, |, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
+            toolbar: "new_document, save, load, |, charmap, |, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
+            save_callback: "save"
 		});
 	}-*/;
 
-	
+    //TODO Get Callback functionality to work - http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideJavaFromJavaScript
+    public static void save(String id, String content){
+        Window.alert("The editor content is:\n\n" + content);
+    }
+
+    public static native void exportStaticSaveMethod()
+    /*-{
+       $wnd.save = @com.gmail.cjbooms.thesis.pythonappengine.client.SourceCodeEditor::save(Ljava/lang/String;Ljava/lang/String;)
+    }-*/;
+
+
 	/**
 	 * Sets the text shown by the EditArea identified by the specified id.
 	 * 
 	 * @param id    the id of the EditArea
 	 * @param value the new text the EditArea must show
 	 */
-
 	private static native void setText(String id, String value)
 		/*-{$wnd.editAreaLoader.setValue(id, value)}-*/;
 
