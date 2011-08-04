@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * A TextArea prepared to edit source code in a variety of formats.
  * 
- * @author dunlord
  *
  */
 
