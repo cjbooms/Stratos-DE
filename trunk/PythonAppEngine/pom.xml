@@ -51,15 +51,41 @@
         </repository>
     </repositories>
 
+
     <!-- Standard Project Dependencies -->
     <dependencies>
 
-        <!-- GIT SCM library repository location -->
+    <!-- START JGIT GIT SCM libraries -->
         <dependency>
           <groupId>org.eclipse.jgit</groupId>
           <artifactId>org.eclipse.jgit</artifactId>
           <version>1.0.0.201106090707-r</version>
         </dependency>
+        <!-- Smart HTTP Servlet -->
+        <dependency>
+          <groupId>org.eclipse.jgit</groupId>
+          <artifactId>org.eclipse.jgit.http.server</artifactId>
+          <version>1.0.0.201106090707-r</version>
+        </dependency>
+        <!-- AWT UI Helpers -->
+        <dependency>
+          <groupId>org.eclipse.jgit</groupId>
+          <artifactId>org.eclipse.jgit.ui</artifactId>
+          <version>1.0.0.201106090707-r</version>
+        </dependency>
+        <!-- JUnit Test Support -->
+        <dependency>
+          <groupId>org.eclipse.jgit</groupId>
+          <artifactId>org.eclipse.jgit.junit</artifactId>
+          <version>1.0.0.201106090707-r</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.44-1</version>
+        </dependency>
+    <!-- END JGIT GIT SCM libraries -->
+
 
         <!-- JUnit for Unit Testing -->
         <dependency>
