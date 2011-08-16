@@ -235,14 +235,14 @@
                     <webXml>webapp/WEB-INF/web.xml</webXml>
                 </configuration>
                 <executions>
-                    <!-- <execution> <id>generateAsynch</id> <phase>generate-sources</phase> <goals>
+                     <execution> <id>generateAsynch</id> <phase>generate-sources</phase> <goals>
                         <goal>generateAsync</goal> </goals> </execution> 
                     <execution>
                         <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                    </execution>-->
+                    </execution>
                 </executions>
             </plugin>
 

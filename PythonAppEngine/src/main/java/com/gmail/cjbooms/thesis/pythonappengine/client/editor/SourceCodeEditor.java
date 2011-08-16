@@ -1,4 +1,4 @@
-package com.gmail.cjbooms.thesis.pythonappengine.client;
+package com.gmail.cjbooms.thesis.pythonappengine.client.editor;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
@@ -111,7 +111,7 @@ public class SourceCodeEditor extends Composite
 
     public static native void exportStaticSaveMethod()
     /*-{
-       $wnd.save = @com.gmail.cjbooms.thesis.pythonappengine.client.SourceCodeEditor::save(Ljava/lang/String;Ljava/lang/String;)
+       $wnd.save = @com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor::save(Ljava/lang/String;Ljava/lang/String;)
     }-*/;
 
 
