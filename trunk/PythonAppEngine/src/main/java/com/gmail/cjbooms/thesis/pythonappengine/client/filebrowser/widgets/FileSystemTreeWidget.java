@@ -4,6 +4,7 @@
  */
 package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
@@ -26,20 +27,32 @@ import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileType;
 public class FileSystemTreeWidget extends Composite {
 
     private Tree tree;
-    private FileTableWidget table;
+   // private FileTableWidget table;
+    private SourceCodeEditor editor;
     private String treeTitle;
     private HTML footer;
     private FileSystemServiceAsync fileSystemSvc = GWT.create(FileSystemService.class);
 
 
-    public FileSystemTreeWidget(String treeTitle, FileTableWidget table, HTML footer) {
+/*    public FileSystemTreeWidget(String treeTitle, FileTableWidget table, HTML footer) {
         this.table = table;
         this.treeTitle = treeTitle;
         this.footer=footer;
         tree = createFileSystemTree();
         
         initWidget(tree);
+    }*/
+
+
+    public FileSystemTreeWidget(String treeTitle, SourceCodeEditor editor, HTML footer) {
+        this.editor = editor;
+        this.treeTitle = treeTitle;
+        this.footer=footer;
+        tree = createFileSystemTree();
+
+        initWidget(tree);
     }
+
 
     private Tree createFileSystemTree() {
         tree = new Tree();
@@ -121,7 +134,8 @@ public class FileSystemTreeWidget extends Composite {
             }
             @Override
             public void onSuccess(FileWrapper[] results) {
-                table.updateTableContent(results);
+                //todo Update Edit Area with Contents of Selected File
+             //   table.updateTableContent(results);
             }
         };
         fileSystemSvc.getContents(path, callback);
@@ -135,6 +149,7 @@ public class FileSystemTreeWidget extends Composite {
                 father.addItem(newItem);
                 newItem.addItem("Loading...");
             }
+
         }
     }
 }

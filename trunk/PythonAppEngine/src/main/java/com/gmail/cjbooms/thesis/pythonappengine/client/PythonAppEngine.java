@@ -1,7 +1,9 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets.FileSystemTreeWidget;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets.MainMenuWidget;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
@@ -13,25 +15,12 @@ import com.google.gwt.dom.client.Style.Unit;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class PythonAppEngine implements EntryPoint {
-	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-		+ "attempting to contact the server. Please check your network "
-		+ "connection and try again.";
-
-	/**
-
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("CONOR User");
-		final Label errorLabel = new Label();
+        final SourceCodeEditor editor;
 
 		// Create the main panel to hold everything
 		DockLayoutPanel rootPanel = new DockLayoutPanel(Unit.EM);
@@ -44,11 +33,12 @@ public class PythonAppEngine implements EntryPoint {
 		// Panel to house the Main Menu	
 		FlowPanel menuBarPanel = new FlowPanel();
 		DOM.setElementAttribute(menuBarPanel.getElement(), "id", "main_menu_panel");
+        menuBarPanel.add(new MainMenuWidget());
 		rootPanel.addNorth(menuBarPanel, 2);
 
 		// Panel to house a footer if desired
-		HTMLPanel footer = new HTMLPanel("New HTML");
-		DOM.setElementAttribute(footer.getElement(), "id", "footer_panel");
+		HTML footer = new HTML();
+		DOM.setElementAttribute(footer.getElement(), "id", "footer");
 		rootPanel.addSouth(footer, 2);
 
 		
@@ -56,19 +46,31 @@ public class PythonAppEngine implements EntryPoint {
 		//Build the Main Work Area Panel and Add to Root
 		SplitLayoutPanel mainWorkAreaPanel = new SplitLayoutPanel();
 		rootPanel.add(mainWorkAreaPanel);
-		
+
+
+        // TODO Move this to a File Selection Handler
+        // Creation of the sample SourceCodeEditor. In the constructor we say which syntax we want to edit.
+		editor = new SourceCodeEditor("python");
+	    // Seting an initial content for the editor.
+		editor.setText("Hello World");
+
+
 		//Create a Tree Scroll For Project Structure and Add to Main Work Panel
 		ScrollPanel treeScrollPanel = new ScrollPanel();
-		mainWorkAreaPanel.addWest(treeScrollPanel, 155.0);
+        treeScrollPanel.add(new FileSystemTreeWidget("File System", editor, footer));
+		mainWorkAreaPanel.addWest(treeScrollPanel, 200);
 		
 		
-		//Add Text Editor Panel
+		//Create Text Editor Panel
 		DockLayoutPanel textEditorPanel = new DockLayoutPanel(Unit.EM);
-		mainWorkAreaPanel.add(textEditorPanel);
 
 		// Add Scroll Panel for Text Editor
 		ScrollPanel contentScrollPanel = new ScrollPanel();
-		textEditorPanel.addWest(contentScrollPanel, 100.0);
+        textEditorPanel.add(contentScrollPanel);
+        DOM.setElementAttribute(textEditorPanel.getElement(), "id", "editor_panel");
+        mainWorkAreaPanel.add(textEditorPanel);
+
+
 
 		//Add Panel Holder For Edit Area
 		VerticalPanel editAreaMainPanel = new VerticalPanel();
@@ -76,40 +78,6 @@ public class PythonAppEngine implements EntryPoint {
 
 
         VerticalPanel editAreaContentPanel = new VerticalPanel();
-
-
-        // Creation of the sample SourceCodeEditor. In the constructor we say wich syntax we want to edit.
-		final SourceCodeEditor editor = new SourceCodeEditor("python");
-
-	    // Seting an initial content for the editor.
-		editor.setText("import unittest\n" +
-                "from ChessBoard import *\n" +
-                "\n" +
-                "class GetLastMoveTest(unittest.TestCase):\n" +
-                "\n" +
-                "    def testGetLastMove(self):\n" +
-                "        \"\"\"\n" +
-                "        Test the behaviour of getLastMove for a valid move.\n" +
-                "        The expected result should be returned.\n" +
-                "        \"\"\"\n" +
-                "        chessboard = ChessBoard()\n" +
-                "        chessboard.resetBoard()\n" +
-                "        expectedResult = ((4, 6), (4, 5))\n" +
-                "        chessboard.addMove(expectedResult[0],expectedResult[1])\n" +
-                "        result = chessboard.getLastMove()\n" +
-                "        self.assertEqual(expectedResult[0],result[0])\n" +
-                "        self.assertEqual(expectedResult[1],result[1])\n" +
-                "        \n" +
-                "    def testGetLastMove_noMovesMade(self):\n" +
-                "        \"\"\"\n" +
-                "        Test the behaviour of getLastMove when no moves have been made.\n" +
-                "        None should be returned.\n" +
-                "        \"\"\"\n" +
-                "        chessboard = ChessBoard()\n" +
-                "        chessboard.resetBoard()\n" +
-                "        result = chessboard.getLastMove()\n" +
-                "        self.assertEqual(None,result)\n" +
-                "        ");
 
 
 		// Creation of a button that will show the content of the editor
@@ -129,9 +97,11 @@ public class PythonAppEngine implements EntryPoint {
 
 
 		editAreaMainPanel.setWidth("100%");
-		editAreaContentPanel.setWidth("90%");
+        editAreaMainPanel.setHeight("100%");
+        editAreaContentPanel.setWidth("90%");
+        editAreaContentPanel.setHeight("100%");
 		editor.setWidth("100%");
-		editor.setHeight("300px");
+		editor.setHeight("100%");
 
 	    RootLayoutPanel.get().add(rootPanel);
 		//END: Creation of the screen layout
