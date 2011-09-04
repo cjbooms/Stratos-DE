@@ -1,8 +1,8 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
-import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets.FileSystemTreeWidget;
-import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets.MainMenuWidget;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemTreeWidget;
+import com.gmail.cjbooms.thesis.pythonappengine.client.widgets.MainMenuWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -57,7 +57,7 @@ public class PythonAppEngine implements EntryPoint {
 
 		//Create a Tree Scroll For Project Structure and Add to Main Work Panel
 		ScrollPanel treeScrollPanel = new ScrollPanel();
-        treeScrollPanel.add(new FileSystemTreeWidget("File System", editor, footer));
+        treeScrollPanel.add(new FileSystemTreeWidget("Available Projects", editor, footer));
 		mainWorkAreaPanel.addWest(treeScrollPanel, 200);
 		
 		
