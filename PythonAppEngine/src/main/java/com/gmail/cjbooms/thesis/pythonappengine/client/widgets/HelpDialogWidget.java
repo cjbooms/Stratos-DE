@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets;
+package com.gmail.cjbooms.thesis.pythonappengine.client.widgets;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

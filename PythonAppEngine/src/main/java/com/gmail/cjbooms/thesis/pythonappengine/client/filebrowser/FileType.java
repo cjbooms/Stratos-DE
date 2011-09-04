@@ -6,8 +6,7 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 /**
  *
- * @author firas
  */
 public enum FileType {
-    DIR, IMG, DOC, MM, OTHER
+    DIR, IMG, DOC, MM, PYTHON, RUBY, JAVA, OTHER
 };

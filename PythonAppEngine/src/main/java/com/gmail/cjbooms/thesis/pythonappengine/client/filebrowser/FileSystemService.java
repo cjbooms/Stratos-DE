@@ -13,9 +13,12 @@ import com.google.gwt.user.client.rpc.RemoteService;
  */
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import java.io.IOException;
+
 @RemoteServiceRelativePath("fs")
 public interface FileSystemService extends RemoteService{
-    FileWrapper[] getContents(FileWrapper file);
-    FileWrapper[] getContents(String file);
+    FileWrapper[] getDirectoryContents(FileWrapper file);
+    FileWrapper[] getDirectoryContents(String file);
+    String getFileContents(String file) throws IOException;
     Boolean deleteFile(String absoluteName);
 }

@@ -1,9 +1,12 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
+
 import java.io.Serializable;
 /**
+ * Stores all relevant information about a file
+ * Generally just stores file name and detail,
+ * Converted to store contents of certain file types as a String (eg Python files etc)
  *
- * @author firas
  */
 
 
@@ -13,14 +16,12 @@ public class FileWrapper implements Serializable {
     private String path;
     private FileType kind;
     private String modifiedAt;
+    private String contents;
 
 
     public FileWrapper(String path, String name, String modifiedAt) {
-        this.name = name;
-        this.path = path;
+        this(path, name);
         this.modifiedAt=modifiedAt;
-        this.kind = this.getFileType(extractFileExtention(name));
-
     }
 
     public FileWrapper(String path, String name) {
@@ -54,6 +55,17 @@ public class FileWrapper implements Serializable {
         return kind;
     }
 
+   public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    /**
+     * Accessed on the server side where directory can be determined from File object
+     */
     public void setIsDirectory() {
         this.kind = FileType.DIR;
     }
@@ -63,6 +75,12 @@ public class FileWrapper implements Serializable {
         return file.substring(dot + 1).toLowerCase();
     }
 
+    /**
+     * Set some basic File Types
+     *
+     * @param ext
+     * @return
+     */
     private FileType getFileType(String ext) {
         if(ext.equals("doc") || ext.equals("pdf") || ext.equals("ppt") || ext.equals("html"))
             return FileType.DOC;
@@ -70,6 +88,10 @@ public class FileWrapper implements Serializable {
             return FileType.MM;
         if(ext.equals("gif") || ext.equals("jpg") || ext.equals("png") || ext.equals("tif") || ext.equals("psd"))
             return FileType.IMG;
+        if(ext.equals("py"))
+            return FileType.PYTHON;
+        if(ext.equals("rb"))
+            return FileType.RUBY;
         return FileType.OTHER;
 
     }

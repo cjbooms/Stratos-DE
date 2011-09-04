@@ -8,6 +8,7 @@ import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemSer
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileWrapper;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,7 +30,7 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     }
 
     @Override
-    public FileWrapper[] getContents(FileWrapper file) {
+    public FileWrapper[] getDirectoryContents(FileWrapper file) {
         File fsFile = new File(file.getPath());
         if (fsFile.isDirectory()) {
             return this.buildFilesList(fsFile.listFiles());
@@ -38,9 +39,16 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     }
 
     @Override
-    public FileWrapper[] getContents(String file) {
-        return this.getContents(new FileWrapper(file));
+    public FileWrapper[] getDirectoryContents(String file) {
+        return this.getDirectoryContents(new FileWrapper(file));
     }
+
+
+    @Override
+    public String getFileContents(String file) throws IOException {
+        return Utilities.fileToString(file);
+    }
+
 
     private FileWrapper[] buildFilesList(File[] files) {
 

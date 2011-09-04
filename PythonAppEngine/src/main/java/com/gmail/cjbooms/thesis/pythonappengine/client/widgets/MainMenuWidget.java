@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets;
+package com.gmail.cjbooms.thesis.pythonappengine.client.widgets;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -16,15 +16,16 @@ import com.google.gwt.user.client.ui.MenuBar;
 public class MainMenuWidget extends Composite {
 
     private MenuBar menu;
-    private HelpDialogWidget helpDialog;
+    //private HelpDialogWidget helpDialog;
     public MainMenuWidget() {
-        this.helpDialog = new HelpDialogWidget();
+        //this.helpDialog = new HelpDialogWidget();
         createMenu();
         initWidget(menu);
     }
 
     private void createMenu() {
         menu = new MenuBar();
+
         MenuBar fileMenu = new MenuBar(true);
         fileMenu.addItem("New Directory", createBlankCommand());
         fileMenu.addItem("Delete Selected", createBlankCommand());
@@ -33,11 +34,21 @@ public class MainMenuWidget extends Composite {
         fileMenu.addSeparator();
         fileMenu.addItem("Exit", createBlankCommand());
         menu.addItem("File", fileMenu);
-        MenuBar helpMenu = new MenuBar(true);
-        helpMenu.addItem("Help", helpDialog.createOpenCommand());
-        helpMenu.addItem("About", createBlankCommand());
-        menu.addItem("Help", helpMenu);
-    }
+
+        MenuBar projectMenu = new MenuBar(true);
+        projectMenu.addItem("New Project", createBlankCommand());
+        projectMenu.addItem("Delete Project", createBlankCommand());
+        projectMenu.addItem("Synch Project", createBlankCommand());
+        menu.addItem("Projecct", projectMenu);
+
+        MenuBar gitMenu = new MenuBar(true);
+        gitMenu.addItem("Checkout", createBlankCommand());
+        gitMenu.addItem("Commit", createBlankCommand());
+        gitMenu.addItem("Merge", createBlankCommand());
+        menu.addItem("GIT", gitMenu);
+        MenuBar appEngineMenu = new MenuBar(true);
+        appEngineMenu.addItem("Deploy", createBlankCommand());
+        menu.addItem("AppEngine", appEngineMenu);    }
 
     private Command createBlankCommand() {
         return new Command() {
