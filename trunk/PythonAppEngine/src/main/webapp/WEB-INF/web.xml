@@ -8,9 +8,17 @@
         <servlet-name>com.gmail.cjbooms.thesis.pythonappengine.PythonAppEngine FileSystemService</servlet-name>
         <servlet-class>com.gmail.cjbooms.thesis.pythonappengine.server.FileSystemServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>com.gmail.cjbooms.thesis.pythonappengine.PythonAppEngine GitCommandsService</servlet-name>
+        <servlet-class>com.gmail.cjbooms.thesis.pythonappengine.server.git.GitCommandsServiceImpl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>com.gmail.cjbooms.thesis.pythonappengine.PythonAppEngine FileSystemService</servlet-name>
         <url-pattern>/pythonappengine/fs</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>com.gmail.cjbooms.thesis.pythonappengine.PythonAppEngine GitCommandsService</servlet-name>
+        <url-pattern>/pythonappengine/gs</url-pattern>
     </servlet-mapping>
 
 
