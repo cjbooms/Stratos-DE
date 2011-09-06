@@ -2,7 +2,7 @@ package com.gmail.cjbooms.thesis.pythonappengine.client;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemTreeWidget;
-import com.gmail.cjbooms.thesis.pythonappengine.client.widgets.MainMenuWidget;
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.MainMenuWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

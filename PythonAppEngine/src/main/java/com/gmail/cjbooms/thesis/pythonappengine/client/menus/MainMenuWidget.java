@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gmail.cjbooms.thesis.pythonappengine.client.widgets;
+package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -17,8 +17,10 @@ public class MainMenuWidget extends Composite {
 
     private MenuBar menu;
     //private HelpDialogWidget helpDialog;
+    private GITCommands gitCommands;
     public MainMenuWidget() {
         //this.helpDialog = new HelpDialogWidget();
+        this.gitCommands = new GITCommands();
         createMenu();
         initWidget(menu);
     }
@@ -39,7 +41,7 @@ public class MainMenuWidget extends Composite {
         projectMenu.addItem("New Project", createBlankCommand());
         projectMenu.addItem("Delete Project", createBlankCommand());
         projectMenu.addItem("Synch Project", createBlankCommand());
-        menu.addItem("Projecct", projectMenu);
+        menu.addItem("Project", projectMenu);
 
         MenuBar gitMenu = new MenuBar(true);
         gitMenu.addItem("Checkout", createBlankCommand());
