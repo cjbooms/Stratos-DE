@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.apache.commons.io.FileUtils;
+
 
 /**
  *
@@ -45,8 +47,13 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
 
 
     @Override
-    public String getFileContents(String file) throws IOException {
-        return Utilities.fileToString(file);
+    public String getFileContents(String file) {
+        try {
+            return Utilities.fileToString(file);
+        } catch (IOException e) {
+            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return null;
     }
 
 
@@ -66,6 +73,16 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     public Boolean deleteFile(String absoluteName) {
         System.out.println("deleting : "+absoluteName);
         return new File(absoluteName).delete();
+    }
+
+
+    @Override
+    public void saveFile(String absoluteName, String fileContents) {
+        try {
+            FileUtils.fileWrite(absoluteName, fileContents);
+        } catch (Exception e) {
+            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
 }

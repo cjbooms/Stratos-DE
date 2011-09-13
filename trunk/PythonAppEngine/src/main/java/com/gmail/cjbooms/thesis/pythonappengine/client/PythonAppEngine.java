@@ -1,5 +1,6 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.editor.EditorHelper;
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemTreeWidget;
 import com.gmail.cjbooms.thesis.pythonappengine.client.menus.MainMenuWidget;
@@ -52,7 +53,7 @@ public class PythonAppEngine implements EntryPoint {
         // Creation of the sample SourceCodeEditor. In the constructor we say which syntax we want to edit.
 		editor = new SourceCodeEditor("python");
 	    // Seting an initial content for the editor.
-		editor.setText("Hello World");
+		editor.setFileContents("Hello World");
 
 
 		//Create a Tree Scroll For Project Structure and Add to Main Work Panel
@@ -83,7 +84,7 @@ public class PythonAppEngine implements EntryPoint {
 		// Creation of a button that will show the content of the editor
 		Button b = new Button("Show content", new ClickHandler()
 			{public void onClick(ClickEvent event) {
-                Window.alert("The editor content is:\n\n" + editor.getText());}});
+                Window.alert("The editor content is:\n\n" + editor.getFileContents());}});
 
 		//BEGIN: Creation of the screen layout
 		editAreaContentPanel.add(new HTML("<br /><b>SourceCode Showcase</b><br /><br />"));
@@ -102,6 +103,10 @@ public class PythonAppEngine implements EntryPoint {
         editAreaContentPanel.setHeight("100%");
 		editor.setWidth("100%");
 		editor.setHeight("100%");
+      //  EditorHelper.setSourceCodeEditor(editor);
+        //editor.exportStaticSaveMethod(editor);
+        //editor.exportStaticSaveMethod();
+
 
 	    RootLayoutPanel.get().add(rootPanel);
 		//END: Creation of the screen layout
