@@ -1,10 +1,17 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.editor;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemService;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemServiceAsync;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.Editor;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import java.io.IOException;
 
 /**
  * A TextArea prepared to edit source code in a variety of formats.
@@ -19,9 +26,13 @@ public class SourceCodeEditor extends Composite
 
 	private final TextArea editAreaContent;
 	private final VerticalPanel main = new VerticalPanel();
+    private static FileSystemServiceAsync fileSystemSvc = GWT.create(FileSystemService.class);
 
 	private boolean initialized = false;
-	private String text = "";
+
+    private String fileContents = "";
+
+    private String filePath = "";
 
 
 	/**
@@ -46,6 +57,8 @@ public class SourceCodeEditor extends Composite
 
 		editAreaContent.setHeight ("100%");
 		editAreaContent.setWidth  ("100%");
+        EditorHelper.setSourceCodeEditor(this);
+        EditorHelper.setEditorID(id);
 	}
 
 
@@ -60,18 +73,35 @@ public class SourceCodeEditor extends Composite
 		super.onLoad();
 		convertToEditArea(id, syntax);
 		initialized = true;
-		setText(id, text);
+		setText(id, fileContents);
+        exportStaticSaveMethod();
 	}
 
 	@Override
 	protected void onUnload()
 		{initialized = false; super.onUnload();}
 
-	/** Gets the content shown in the editor     @return the content of the editor */
-	/*GETTER*/ public String getText() {if(initialized)return getText(id); return text;}
 
-	/** Sets the content shown in the editor     @param value the text to be shown in the editor */
-	/*SETTER*/ public void setText(String value) {if(initialized)setText(id, value);else text = value;}
+	/** Gets the content shown in the editor
+     *
+     * @return the content of the editor
+     */
+    public String getFileContents() {
+        if(initialized)
+            return getText(id);
+        return fileContents;
+    }
+
+	/** Store content and display in editor if initialised
+     *
+     *  @param value the fileContents to be shown in the editor
+     */
+    public void setFileContents(String value) {
+        fileContents = value;
+        if(initialized)
+            setText(id, value);
+
+    }
 
 	/** Sets the editor width.    @param width the object's new width, in CSS units (e.g. "10px", "1em") */
 	/*SETTER*/ @Override public void setWidth(String width) {super.setWidth(width); main.setWidth(width);}
@@ -104,35 +134,63 @@ public class SourceCodeEditor extends Composite
 		});
 	}-*/;
 
-    //TODO Get Callback functionality to work - http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideJavaFromJavaScript
-    public static void save(String id, String content){
-        Window.alert("The editor content is:\n\n" + content);
+
+    public static void save()  {
+        String fileContents = EditorHelper.getFileContents();
+        String filePath = EditorHelper.getFilePath();
+        AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
+
+            @Override
+            public void onFailure(Throwable thrwbl) {
+                Window.alert("Error Saving. Cached Locally\n" );
+            }
+            @Override
+            public void onSuccess(Boolean result) {
+                Window.alert("Saved to File System\n" );
+            }
+        };
+        try {
+            fileSystemSvc.saveFile(filePath, fileContents, callback);
+
+        } catch (Exception e) {
+            GWT.log("Error Saving File" + e.getStackTrace());
+            Window.alert("Error Saving. Cached Locally\n" );
+        }
     }
+
 
     public static native void exportStaticSaveMethod()
     /*-{
-       $wnd.save = @com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor::save(Ljava/lang/String;Ljava/lang/String;)
+       $wnd.save = @com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor::save()
     }-*/;
 
 
 	/**
-	 * Sets the text shown by the EditArea identified by the specified id.
+	 * Sets the fileContents shown by the EditArea identified by the specified id.
 	 * 
 	 * @param id    the id of the EditArea
-	 * @param value the new text the EditArea must show
+	 * @param value the new fileContents the EditArea must show
 	 */
 	private static native void setText(String id, String value)
 		/*-{$wnd.editAreaLoader.setValue(id, value)}-*/;
 
 
 	/**
-	 * Gets the text shown by the EditArea identified by the specified id.
+	 * Gets the fileContents shown by the EditArea identified by the specified id.
 	 * 
 	 * @param id    the id of the EditArea
 	 * 
-	 * @return the text the EditArea is showing
+	 * @return the fileContents the EditArea is showing
 	 */
-
 	private static native String getText(String id)
 		/*-{return $wnd.editAreaLoader.getValue(id);}-*/;
+
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 }

@@ -113,6 +113,14 @@
         </dependency>
         <!-- END GWT-->
 
+        <!-- Apache Commons to Simplify Java IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>20030203.000550</version>
+        </dependency>
+
+
         <!-- J2EE Servlet API. We need it to compile IndexServlet class. You can probably remove
             it, if you don't explicitly use Servlets -->
         <dependency>
