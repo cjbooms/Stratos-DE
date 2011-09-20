@@ -2,14 +2,13 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 
 import java.io.Serializable;
+
 /**
  * Stores all relevant information about a file
  * Generally just stores file name and detail,
  * Converted to store contents of certain file types as a String (eg Python files etc)
  *
  */
-
-
 public class FileWrapper implements Serializable {
 
     private String name;

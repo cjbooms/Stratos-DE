@@ -18,9 +18,13 @@ public class MainMenuWidget extends Composite {
     private MenuBar menu;
     //private HelpDialogWidget helpDialog;
     private GITCommands gitCommands;
+    private GitCloneDialogWidget gitCloneDialogWidget;
+
+
     public MainMenuWidget() {
         //this.helpDialog = new HelpDialogWidget();
-        this.gitCommands = new GITCommands();
+        gitCommands = new GITCommands();
+        gitCloneDialogWidget = new GitCloneDialogWidget();
         createMenu();
         initWidget(menu);
     }
@@ -44,10 +48,11 @@ public class MainMenuWidget extends Composite {
         menu.addItem("Project", projectMenu);
 
         MenuBar gitMenu = new MenuBar(true);
-        gitMenu.addItem("Checkout", createBlankCommand());
+        gitMenu.addItem("Clone", gitCloneDialogWidget.openDialogForGITCloneCommand());
         gitMenu.addItem("Commit", createBlankCommand());
         gitMenu.addItem("Merge", createBlankCommand());
         menu.addItem("GIT", gitMenu);
+
         MenuBar appEngineMenu = new MenuBar(true);
         appEngineMenu.addItem("Deploy", createBlankCommand());
         menu.addItem("AppEngine", appEngineMenu);    }
