@@ -96,7 +96,7 @@ public class PythonAppEngine implements EntryPoint {
         editAreaMainPanel.add(editAreaContentPanel);
         editAreaMainPanel.setCellHorizontalAlignment(editAreaContentPanel, HasHorizontalAlignment.ALIGN_CENTER);
 
-
+        contentScrollPanel.setHeight("100%");
 		editAreaMainPanel.setWidth("100%");
         editAreaMainPanel.setHeight("100%");
         editAreaContentPanel.setWidth("90%");
