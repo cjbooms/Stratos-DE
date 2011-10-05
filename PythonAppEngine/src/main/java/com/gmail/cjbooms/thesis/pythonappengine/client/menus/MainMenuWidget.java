@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.MenuBar;
 
 /**
  *
- * @author firas
  */
 public class MainMenuWidget extends Composite {
 
@@ -19,12 +18,15 @@ public class MainMenuWidget extends Composite {
     //private HelpDialogWidget helpDialog;
     private GITCommands gitCommands;
     private GitCloneDialogWidget gitCloneDialogWidget;
+    private CreateNewProjectDialogWidget createNewProjectDialogWidget;
+
 
 
     public MainMenuWidget() {
         //this.helpDialog = new HelpDialogWidget();
         gitCommands = new GITCommands();
         gitCloneDialogWidget = new GitCloneDialogWidget();
+        createNewProjectDialogWidget = new CreateNewProjectDialogWidget();
         createMenu();
         initWidget(menu);
     }
@@ -42,7 +44,7 @@ public class MainMenuWidget extends Composite {
         menu.addItem("File", fileMenu);
 
         MenuBar projectMenu = new MenuBar(true);
-        projectMenu.addItem("New Project", createBlankCommand());
+        projectMenu.addItem("New Project", createNewProjectDialogWidget.openDialogForNewProjectCommand());
         projectMenu.addItem("Delete Project", createBlankCommand());
         projectMenu.addItem("Synch Project", createBlankCommand());
         menu.addItem("Project", projectMenu);

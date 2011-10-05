@@ -28,6 +28,7 @@ public class GITCommands{
 
     }
 
+    private String hello= "sds";
 
     /**
      * Execute the RPC GIT CLone over HTTP call
@@ -44,11 +45,14 @@ public class GITCommands{
             @Override
             public void onFailure(Throwable thrwbl) {
                 //TODO Something wrong. set Dialog Message
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Clone Failure");
             }
 
             @Override
             public void onSuccess(Boolean result) {
                  //TODO set Dialog Message using boolean result
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Clone Success");
+
             }
 
         };
@@ -56,6 +60,35 @@ public class GITCommands{
 
     }
 
+
+    /**
+     * Execute the RPC GIT Initialize New Repo call
+     *
+     * @param filePath
+     */
+    public void initializeNewRepository(String filePath) {
+        if (this.gitCommandsSvc == null) {
+            gitCommandsSvc = GWT.create(GitCommandsService.class);
+        }
+        AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
+
+            @Override
+            public void onFailure(Throwable thrwbl) {
+                //TODO Something wrong. set Dialog Message
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Create New Project Failure");
+            }
+
+            @Override
+            public void onSuccess(Boolean result) {
+                 //TODO set Dialog Message using boolean result
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Create New Project Success");
+
+            }
+
+        };
+        gitCommandsSvc.initializeNewRepository(filePath, callback);
+
+    }
 
 
 

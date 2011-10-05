@@ -8,13 +8,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import java.io.IOException;
 
 /**
- * @author firas
  */
 public interface GitCommandsServiceAsync {
 
     void createRepository(String filePath, AsyncCallback<Boolean> async) throws IOException;
 
-    void cloneRepositoryOverHTTP(String filePath, String gitHttpURL, AsyncCallback<Boolean> async);
+    void cloneRepositoryOverHTTP(String filePath, String gitHttpURL, AsyncCallback async);
 
-    void cloneRepositoryOverHTTPS(String filePath, String gitHttpsURL, AsyncCallback<Boolean> async);
+    void initializeNewRepository(String filePath, AsyncCallback async);
+
+    void addFileToRepository(String pathToRepository, String fileNameToAdd, AsyncCallback async);
 }

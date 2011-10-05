@@ -9,6 +9,9 @@ import com.gmail.cjbooms.thesis.pythonappengine.client.menus.GitCommandsService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.InitCommand;
+import org.eclipse.jgit.api.errors.*;
+import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 
@@ -16,14 +19,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *
- * @author firas
+ * User: conor
  */
 public class GitCommandsServiceImpl extends RemoteServiceServlet implements GitCommandsService{
 
 
     /** Create a blank GIT repository on the local file system
-     *
+     * TODO - Remove, using init API call in initializeNewRepository() instead
      *
      * @param filePath
      * @throws IOException
@@ -45,45 +47,62 @@ public class GitCommandsServiceImpl extends RemoteServiceServlet implements GitC
      * @param filePath
      * @param gitHttpURL
      */
-    public boolean cloneRepositoryOverHTTP(String filePath, String gitHttpURL) {
+    public void cloneRepositoryOverHTTP(String filePath, String gitHttpURL) throws JGitInternalException {
         File directory = new File(filePath);
         CloneCommand command = Git.cloneRepository();
         command.setDirectory(directory);
         command.setURI(gitHttpURL);
-        Git git2 = command.call();
-        Repository repository = git2.getRepository();
-        //Map<String, Ref> tags = repository.getTags();
-        //for (String key : tags.keySet()) {
-        //    System.out.println(key+":"+tags.get(key).toString());
-        //}
-
-        return true;
-
-
+        command.call();
     }
 
-
-    /** Clone a repository from a HTTPS location
-     * URL should be of the form:
-     * "https://cjbooms@github.com/cjbooms/helloworld.git"
+    /**
+     * Initialize a new empty GIT repository
      *
-     * TODO: Refactor so user name and password informatiuon can be passed as separate parameters - Testing Needed
-     *
-     * @param filePath
-     * @param gitHttpsURL
+     * @param pathToNewRepository Location to build new Repo
+     * @throws IOException, JGitInternalException
      */
-    public boolean cloneRepositoryOverHTTPS(String filePath, String gitHttpsURL) {
-        File directory = new File(filePath);
-        CloneCommand command = Git.cloneRepository();
-        command.setDirectory(directory);
-        command.setURI(gitHttpsURL);
-        Git git2 = command.call();
-        Repository repository = git2.getRepository();
-/*            Map<String, Ref> tags = repository.getTags();
-            for (String key : tags.keySet()) {
-                System.out.println(key+":"+tags.get(key).toString());
-            }*/
+	public void initializeNewRepository(String pathToNewRepository) throws IOException, JGitInternalException {
+		File directory = new File(pathToNewRepository);
+		InitCommand command = new InitCommand();
+		command.setDirectory(directory);
+		command.call();
+	}
 
-        return true;
+
+    /**
+     * Add file to Local Repository
+     *
+     * @param pathToRepository Root Location Of Repository or Project
+     * @param fileNameToAdd File name with extension of or directory to be committed
+     * @throws IOException, JGitInternalException, NoFilepatternException
+     */
+	public void addFileToRepository(String pathToRepository, String fileNameToAdd)
+            throws IOException, JGitInternalException {
+
+        File repositoryDirectory = new File(pathToRepository);
+		Git repository = Git.open(repositoryDirectory);
+        try {
+            repository.add().addFilepattern(fileNameToAdd).call();
+        } catch (NoFilepatternException e) {
+            throw new JGitInternalException(e.getMessage());
+        }
     }
+
+    /**
+     * Commit Changes to local Repository
+     *
+     * @param pathToRepository Root Location Of Repository or Project
+     * @param logMessage The log message for this commit
+     * @param committerName The name of the committer
+     * @param committerEmail The email address of the committer
+     * @throws IOException, JGitInternalException, NoFilepatternException
+     */
+	public void commitChangesToLocalRepository(String pathToRepository, String logMessage,
+            String committerName, String committerEmail) throws IOException, GitAPIException {
+
+        File repositoryDirectory = new File(pathToRepository);
+		Git repository = Git.open(repositoryDirectory);
+        repository.commit().setMessage(logMessage).setCommitter(committerName,committerEmail).setAll(true).call();
+	}
+
 }

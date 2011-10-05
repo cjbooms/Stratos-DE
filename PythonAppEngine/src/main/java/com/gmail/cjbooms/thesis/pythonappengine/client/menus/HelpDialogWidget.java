@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  *
- * @author firas
  */
 public class HelpDialogWidget extends Composite{
 
