@@ -9,7 +9,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  *
- * @author firas
  */
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -21,5 +20,5 @@ public interface FileSystemService extends RemoteService{
     FileWrapper[] getDirectoryContents(String file);
     String getFileContents(String file);
     Boolean deleteFile(String absoluteName);
-    void saveFile(String absoluteName, String fileContents);
+    void saveFile(String absoluteName, String fileContents) throws Exception;
 }

@@ -12,14 +12,12 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.*;
 
-import javax.swing.*;
-
 /**
  * User: conor
  * Date: 19/09/11
  * Time: 21:43
  */
-public class GitCloneDialogWidget extends Composite implements ChangeHandler, ValueChangeHandler, SelectionHandler{
+public class GitPushChangesDialogWidget extends Composite implements ChangeHandler, ValueChangeHandler, SelectionHandler{
 
     private DialogBox cloneDialog;
     private String title = "Clone Repository";
@@ -34,12 +32,12 @@ public class GitCloneDialogWidget extends Composite implements ChangeHandler, Va
     /**
      * Default Constructor
      */
-    public GitCloneDialogWidget(){
+    public GitPushChangesDialogWidget(){
 
     }
 
     /**
-     * Create the GIT Clone Dialog Window
+     * Create the GIT Commit Dialog Window
      *
      * @return dialog The created Dialog Box
      */

@@ -16,7 +16,6 @@ import org.apache.commons.io.FileUtils;
 
 /**
  *
- * @author firas
  */
 public class FileSystemServiceImpl extends RemoteServiceServlet implements FileSystemService {
 
@@ -77,12 +76,8 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
 
 
     @Override
-    public void saveFile(String absoluteName, String fileContents) {
-        try {
-            FileUtils.fileWrite(absoluteName, fileContents);
-        } catch (Exception e) {
-            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    public void saveFile(String absoluteName, String fileContents)  throws Exception {
+        FileUtils.fileWrite(absoluteName, fileContents);
     }
 
 }

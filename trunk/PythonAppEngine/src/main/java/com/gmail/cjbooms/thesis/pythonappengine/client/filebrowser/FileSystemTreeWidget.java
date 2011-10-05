@@ -5,19 +5,17 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
+import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-
-import java.io.IOException;
 
 /**
  * Builds the server side representation of the file tree hierarchy
@@ -29,7 +27,7 @@ public class FileSystemTreeWidget extends Composite {
     private String treeTitle;
     private HTML footer;
     private FileSystemServiceAsync fileSystemSvc = GWT.create(FileSystemService.class);
-
+    private static final String rootFolder = ConfigConstants.projectRoot;
 
     public FileSystemTreeWidget(String treeTitle, SourceCodeEditor editor, HTML footer) {
         this.editor = editor;
@@ -57,12 +55,8 @@ public class FileSystemTreeWidget extends Composite {
         return new OpenHandler() {
             @Override
             public void onOpen(OpenEvent oe) {
-                GWT.log("Tree Item openned");
+                GWT.log("Tree Item opened");
                 TreeItem targetItem = (TreeItem) oe.getTarget();
-                // stupid but would be usefull.
-                if (targetItem.getChildCount() > 1) {
-                    return;
-                }
                 String path = findPath(targetItem);
                 fetchTreeItems(targetItem, path);
             }
@@ -112,9 +106,9 @@ public class FileSystemTreeWidget extends Composite {
 
     private String findPath(TreeItem item) {
         TreeItem parent = item.getParentItem();
-        //TODO COme Up with a better default project folder root
+        //TODO - Dynamically set folder root at user login
         if (parent == null) {
-            return "/home/conor/workspace/Python_Test_Projects";
+            return rootFolder;
         } else {
             return findPath(parent) + "/" + item.getText();
         }
