@@ -7,7 +7,7 @@ package com.gmail.cjbooms.thesis.pythonappengine.shared;
  */
 public class ConfigConstants {
 
-    public final static String projectRoot = "/home/webapp/root/";
+    public final static String PROJECT_ROOT = "/home/webapp/root";
 
     private ConfigConstants() {
     }

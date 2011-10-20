@@ -5,40 +5,28 @@
 
 package com.gmail.cjbooms.thesis.pythonappengine.server.git;
 
-import com.gmail.cjbooms.thesis.pythonappengine.client.menus.GitCommandsService;
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.git.GitCommandsService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.InitCommand;
 import org.eclipse.jgit.api.errors.*;
-import org.eclipse.jgit.errors.UnmergedPathException;
+import org.eclipse.jgit.lib.NullProgressMonitor;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.transport.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Collections;
 
 /**
  * User: conor
  */
-public class GitCommandsServiceImpl extends RemoteServiceServlet implements GitCommandsService{
+public class GitCommandsServiceImpl extends RemoteServiceServlet implements GitCommandsService {
 
-
-    /** Create a blank GIT repository on the local file system
-     * TODO - Remove, using init API call in initializeNewRepository() instead
-     *
-     * @param filePath
-     * @throws IOException
-     */
-    public boolean createRepository(String filePath) throws IOException {
-        RepositoryBuilder builder2 = new RepositoryBuilder();
-                File gitDir = new File(filePath);
-                Repository repository2 = builder2.setGitDir(gitDir).readEnvironment().findGitDir().build();
-                repository2.create();
-
-        return true;
-
-    }
 
     /** Clone a repository from a HTTP location
      * URL should be of the form:
@@ -95,14 +83,81 @@ public class GitCommandsServiceImpl extends RemoteServiceServlet implements GitC
      * @param logMessage The log message for this commit
      * @param committerName The name of the committer
      * @param committerEmail The email address of the committer
-     * @throws IOException, JGitInternalException, NoFilepatternException
+     * @throws IOException, GitAPIException
      */
 	public void commitChangesToLocalRepository(String pathToRepository, String logMessage,
-            String committerName, String committerEmail) throws IOException, GitAPIException {
+            String committerName, String committerEmail) throws IOException, JGitInternalException{
 
         File repositoryDirectory = new File(pathToRepository);
 		Git repository = Git.open(repositoryDirectory);
-        repository.commit().setMessage(logMessage).setCommitter(committerName,committerEmail).setAll(true).call();
-	}
+        try {
+            repository.commit().setMessage(logMessage).setCommitter(committerName,committerEmail).setAll(true).call();
+        } catch (GitAPIException e) {
+            throw new JGitInternalException(e.getMessage());
+        }
+    }
 
+
+    /**
+     * Push Changes to a Remote Repository
+     *
+     * @param pathToLocalRepository Root Location Of Repository or Project
+     * @param remoteRepoURL The URL of the Remote Repository to push to
+     * @param userName The remote login user name
+     * @param password The remote login password
+     * @throws IOException, GitAPIException, URISyntaxException
+     */
+	public void pushLocalCommitsToRemoteRepository(String pathToLocalRepository, String remoteRepoURL,
+            String userName, String password) throws IOException {
+
+        File repositoryDirectory = new File(pathToLocalRepository);
+		Git localGitRepositoryRef = Git.open(repositoryDirectory);
+        Repository localRepository = localGitRepositoryRef.getRepository();
+
+        URIish remoteURI = null;
+        try {
+            remoteURI = new URIish(remoteRepoURL);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        Transport t = Transport.open(localRepository, remoteURI);
+        ((TransportHttp) t).setUseSmartHttp(true);
+        RemoteRefUpdate remoteRefUpdate = new RemoteRefUpdate(
+                localRepository,localRepository.getRef("master"),"refs/heads/master",true,"refs/heads/master",null);
+        t.setCredentialsProvider(new UsernamePasswordCredentialsProvider(userName, password));
+        t.push(NullProgressMonitor.INSTANCE, Collections.singleton(remoteRefUpdate));
+
+    }
+
+
+    /**
+     * Pull changes from Remote Repository
+     *
+     * @param pathToLocalRepository Root Location Of Repository or Project
+     * @param remoteRepoURL The URL of the Remote Repository to push to
+     * @param userName The remote login user name
+     * @param password The remote login password
+     * @throws IOException, GitAPIException, URISyntaxException
+     */
+	public void pullChangesFromRemoteRepository(String pathToLocalRepository, String remoteRepoURL,
+            String userName, String password) throws IOException {
+
+        File repositoryDirectory = new File(pathToLocalRepository);
+		Git localGitRepositoryRef = Git.open(repositoryDirectory);
+        Repository localRepository = localGitRepositoryRef.getRepository();
+
+        URIish remoteURI = null;
+        try {
+            remoteURI = new URIish(remoteRepoURL);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        Transport t = Transport.open(localRepository, remoteURI);
+        ((TransportHttp) t).setUseSmartHttp(true);
+        t.setCredentialsProvider(new UsernamePasswordCredentialsProvider(userName, password));
+        RefSpec refSpec = new RefSpec("+refs/heads/*:refs/heads/*");
+
+        t.fetch(NullProgressMonitor.INSTANCE, Collections.singleton(refSpec));
+
+    }
 }

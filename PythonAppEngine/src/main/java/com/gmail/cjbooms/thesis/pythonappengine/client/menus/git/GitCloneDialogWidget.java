@@ -1,4 +1,4 @@
-package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
+package com.gmail.cjbooms.thesis.pythonappengine.client.menus.git;
 
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.*;
  * Date: 19/09/11
  * Time: 21:43
  */
-public class GitPushChangesDialogWidget extends Composite implements ChangeHandler, ValueChangeHandler, SelectionHandler{
+public class GitCloneDialogWidget extends Composite implements ChangeHandler, ValueChangeHandler, SelectionHandler{
 
     private DialogBox cloneDialog;
     private String title = "Clone Repository";
@@ -26,18 +26,18 @@ public class GitPushChangesDialogWidget extends Composite implements ChangeHandl
 
     private String gitURLEntered = "";
     private String saveToLocation = "";
-    private static final String rootLocation = ConfigConstants.projectRoot;
+    private static final String rootLocation = ConfigConstants.PROJECT_ROOT;
     private GITCommands gitCommands;
 
     /**
      * Default Constructor
      */
-    public GitPushChangesDialogWidget(){
+    public GitCloneDialogWidget(){
 
     }
 
     /**
-     * Create the GIT Commit Dialog Window
+     * Create the GIT Clone Dialog Window
      *
      * @return dialog The created Dialog Box
      */

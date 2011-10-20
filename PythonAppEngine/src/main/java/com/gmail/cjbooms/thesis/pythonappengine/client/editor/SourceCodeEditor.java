@@ -3,15 +3,12 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.editor;
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemService;
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemServiceAsync;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.Editor;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
-import java.io.IOException;
 
 /**
  * A TextArea prepared to edit source code in a variety of formats.
@@ -57,8 +54,8 @@ public class SourceCodeEditor extends Composite
 
 		editAreaContent.setHeight ("100%");
 		editAreaContent.setWidth  ("100%");
-        EditorHelper.setSourceCodeEditor(this);
-        EditorHelper.setEditorID(id);
+        SelectionHelper.setSourceCodeEditor(this);
+        SelectionHelper.setEditorID(id);
 	}
 
 
@@ -129,15 +126,15 @@ public class SourceCodeEditor extends Composite
 			word_wrap       : true,
 			language        : "en",
 			syntax          : syntax,
-            toolbar: "new_document, save, load, |, charmap, |, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
+            toolbar: "new_document, save, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
             save_callback: "save"
 		});
 	}-*/;
 
 
     public static void save()  {
-        String fileContents = EditorHelper.getFileContents();
-        String filePath = EditorHelper.getFilePath();
+        String fileContents = SelectionHelper.getFileContents();
+        String filePath = SelectionHelper.getFilePath();
         AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
 
             @Override

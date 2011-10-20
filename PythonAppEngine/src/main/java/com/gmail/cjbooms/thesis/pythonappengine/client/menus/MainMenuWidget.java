@@ -4,6 +4,7 @@
  */
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.git.*;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
@@ -18,6 +19,8 @@ public class MainMenuWidget extends Composite {
     //private HelpDialogWidget helpDialog;
     private GITCommands gitCommands;
     private GitCloneDialogWidget gitCloneDialogWidget;
+    private GitCommitLocalChangesDialogWidget gitCommitDialogWidget;
+    private GitPushChangesDialogWidget gitPushDialogWidget;
     private CreateNewProjectDialogWidget createNewProjectDialogWidget;
 
 
@@ -26,7 +29,9 @@ public class MainMenuWidget extends Composite {
         //this.helpDialog = new HelpDialogWidget();
         gitCommands = new GITCommands();
         gitCloneDialogWidget = new GitCloneDialogWidget();
+        gitCommitDialogWidget = new GitCommitLocalChangesDialogWidget();
         createNewProjectDialogWidget = new CreateNewProjectDialogWidget();
+        gitPushDialogWidget = new GitPushChangesDialogWidget();
         createMenu();
         initWidget(menu);
     }
@@ -35,10 +40,10 @@ public class MainMenuWidget extends Composite {
         menu = new MenuBar();
 
         MenuBar fileMenu = new MenuBar(true);
-        fileMenu.addItem("New Directory", createBlankCommand());
-        fileMenu.addItem("Delete Selected", createBlankCommand());
+        fileMenu.addItem("New File", createBlankCommand());
+        fileMenu.addItem("Delete File", createBlankCommand());
+        fileMenu.addItem("Upload File", createBlankCommand());
         fileMenu.addItem("Refresh", createBlankCommand());
-        fileMenu.addItem("Upload", createBlankCommand());
         fileMenu.addSeparator();
         fileMenu.addItem("Exit", createBlankCommand());
         menu.addItem("File", fileMenu);
@@ -51,8 +56,8 @@ public class MainMenuWidget extends Composite {
 
         MenuBar gitMenu = new MenuBar(true);
         gitMenu.addItem("Clone", gitCloneDialogWidget.openDialogForGITCloneCommand());
-        gitMenu.addItem("Commit", createBlankCommand());
-        gitMenu.addItem("Merge", createBlankCommand());
+        gitMenu.addItem("Commit", gitCommitDialogWidget.openDialogForGitCommitChangesCommand());
+        gitMenu.addItem("Push", gitPushDialogWidget.openDialogForGITPushCommand());
         menu.addItem("GIT", gitMenu);
 
         MenuBar appEngineMenu = new MenuBar(true);

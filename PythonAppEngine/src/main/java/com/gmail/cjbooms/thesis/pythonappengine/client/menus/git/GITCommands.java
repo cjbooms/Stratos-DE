@@ -3,14 +3,10 @@
  * and open the template in the editor.
  */
 
-package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
+package com.gmail.cjbooms.thesis.pythonappengine.client.menus.git;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
 
 
 /**
@@ -90,6 +86,32 @@ public class GITCommands{
 
     }
 
+    /**
+     * Execute the RPC to commit changes to local repository
+     *
+     * @param filePath
+     */
+    public void commitChangesToLocalRepository(String filePath,String logMessage,String committerName,String committerEmail) {
+        if (this.gitCommandsSvc == null) {
+            gitCommandsSvc = GWT.create(GitCommandsService.class);
+        }
+        AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
+            @Override
+            public void onFailure(Throwable thrwbl) {
+                //TODO Something wrong. set Dialog Message
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Commit Changes Failure");
+            }
 
+            @Override
+            public void onSuccess(Void result) {
+                 //TODO set Dialog Message using boolean result
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Commit Success");
+
+            }
+
+        };
+        gitCommandsSvc.commitChangesToLocalRepository(filePath, logMessage, committerName, committerEmail, callback);
+
+    }
 }

@@ -120,6 +120,12 @@
             <version>20030203.000550</version>
         </dependency>
 
+        <!-- Apache Lang to Simplify String Manipulations -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
         <!-- J2EE Servlet API. We need it to compile IndexServlet class. You can probably remove
             it, if you don't explicitly use Servlets -->
