@@ -1,5 +1,6 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus.git;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SelectionHelper;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,7 +18,7 @@ import com.google.gwt.user.client.ui.*;
  */
 public class GitPushChangesDialogWidget extends Composite{
 
-    private DialogBox cloneDialog;
+    private DialogBox pushDialog;
     private String title = "Push Changes To Remote Repository";
     private TextBox folderNameBox;
     private SuggestBox gitURLSuggestBox;
@@ -139,7 +140,7 @@ public class GitPushChangesDialogWidget extends Composite{
         return new Button("close", new ClickHandler(){
             @Override
             public void onClick(ClickEvent ce) {
-                cloneDialog.hide();
+                pushDialog.hide();
             }
         });
     }
@@ -148,9 +149,8 @@ public class GitPushChangesDialogWidget extends Composite{
         return new Button("Push Changes", new ClickHandler(){
             @Override
             public void onClick(ClickEvent ce) {
-                //TODO - Implement Clone
-                gitCommands.cloneGITRepositoryOverHttp(saveToLocation,gitURLEntered);
-                cloneDialog.hide();
+                gitCommands.pushToRemoteRepository(SelectionHelper.getCurrentProjectPath(), gitURLEntered, remoteLoginName, remoteLoginPassword);
+                pushDialog.hide();
             }
         });
     }
@@ -166,7 +166,7 @@ public class GitPushChangesDialogWidget extends Composite{
         return new Command() {
             @Override
             public void execute() {
-                cloneDialog = createPushDialog();
+                pushDialog = createPushDialog();
             }
         };
     }
