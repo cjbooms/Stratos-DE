@@ -4,6 +4,7 @@
  */
 package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SelectionHelper;
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.core.client.GWT;
@@ -27,7 +28,7 @@ public class FileSystemTreeWidget extends Composite {
     private String treeTitle;
     private HTML footer;
     private FileSystemServiceAsync fileSystemSvc = GWT.create(FileSystemService.class);
-    private static final String rootFolder = ConfigConstants.projectRoot;
+    private static final String rootFolder = ConfigConstants.PROJECT_ROOT;
 
     public FileSystemTreeWidget(String treeTitle, SourceCodeEditor editor, HTML footer) {
         this.editor = editor;
@@ -72,6 +73,8 @@ public class FileSystemTreeWidget extends Composite {
                 String path = findPath(selectedItem);
                 getFileContentsAsString(path);
                 footer.setHTML("Current path : "+path);
+                SelectionHelper.setFilePath(path);
+
             }
 
 
@@ -80,8 +83,8 @@ public class FileSystemTreeWidget extends Composite {
 
 
     /**
-     * Use the RPC to get the file contents form the path in String form
-     * Set
+     * Use the RPC to get the file contents from the path in String form
+     *
      * @param path
      */
     private void getFileContentsAsString(String path) {
@@ -98,6 +101,7 @@ public class FileSystemTreeWidget extends Composite {
             @Override
             public void onSuccess(String contents) {
                editor.setFileContents(contents);
+               SelectionHelper.setFileContents(contents);
 
             }
         };

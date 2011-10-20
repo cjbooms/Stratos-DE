@@ -1,5 +1,6 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.git.GITCommands;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -13,24 +14,22 @@ import com.google.gwt.user.client.ui.*;
  * Date: 05/10/11
  * Time: 23:13
  *
- * This class is used to create a new Project from scratch. In doing so a
- * blank git repo will also be created locally
- * TODO -
+ * This class is used to delete a Project.
  */
-public class CreateNewProjectDialogWidget extends Composite implements ChangeHandler {
+public class DeleteProjectDialogWidget extends Composite implements ChangeHandler {
 
     private DialogBox cloneDialog;
-    private String title = "New Project";
+    private String title = "Delete Project";
     private TextBox folderNameBox;
 
     private String saveToLocation = "";
-    private static final String rootLocation = ConfigConstants.projectRoot;
+    private static final String ROOT_LOCATION = ConfigConstants.PROJECT_ROOT;
     private GITCommands gitCommands;
 
     /**
      * Default Constructor
      */
-    public CreateNewProjectDialogWidget() {
+    public DeleteProjectDialogWidget() {
     }
 
     /**
@@ -67,10 +66,10 @@ public class CreateNewProjectDialogWidget extends Composite implements ChangeHan
 
    private HorizontalPanel createFolderNameTextBox() {
         folderNameBox = new TextBox();
-        Label folderNameBoxLabel = new Label("Enter Destination Folder");
+        Label folderNameBoxLabel = new Label("Enter Project Name");
         folderNameBox.addChangeHandler(this);
         folderNameBox.setText("NEWFOLDER");
-        saveToLocation = (rootLocation + folderNameBox.getText());
+        saveToLocation = (ROOT_LOCATION + folderNameBox.getText());
         return createHorizontalHolder(folderNameBox, folderNameBoxLabel);
     }
 
@@ -110,7 +109,7 @@ public class CreateNewProjectDialogWidget extends Composite implements ChangeHan
      */
     @Override
     public void onChange(ChangeEvent event) {
-        saveToLocation = (rootLocation + folderNameBox.getText());
+        saveToLocation = (ROOT_LOCATION + folderNameBox.getText());
     }
 
     /**
