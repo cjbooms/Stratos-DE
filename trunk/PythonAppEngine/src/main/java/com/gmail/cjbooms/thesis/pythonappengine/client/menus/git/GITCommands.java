@@ -24,7 +24,6 @@ public class GITCommands{
 
     }
 
-    private String hello= "sds";
 
     /**
      * Execute the RPC GIT CLone over HTTP call
@@ -114,4 +113,30 @@ public class GITCommands{
         gitCommandsSvc.commitChangesToLocalRepository(filePath, logMessage, committerName, committerEmail, callback);
 
     }
-}
+
+    /**
+     * Execute the RPC to commit changes to local repository
+     *
+     * @param filePath
+     */
+    public void pushToRemoteRepository(String filePath,String remoteRepo,String userName,String userPassword) {
+        if (this.gitCommandsSvc == null) {
+            gitCommandsSvc = GWT.create(GitCommandsService.class);
+        }
+        AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+
+            @Override
+            public void onFailure(Throwable thrwbl) {
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Push Changes Failure");
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Push Success");
+
+            }
+
+        };
+        gitCommandsSvc.pushLocalCommitsToRemoteRepository(filePath, remoteRepo, userName, userPassword, callback);
+
+    }}

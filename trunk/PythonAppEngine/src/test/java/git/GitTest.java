@@ -117,7 +117,7 @@ public class GitTest {
 		Transport t = Transport.open(localGit.getRepository(), remoteURI);
 		((TransportHttp) t).setUseSmartHttp(true);
             RemoteRefUpdate remoteRefUpdate = new RemoteRefUpdate(localRepository,localRepository.getRef("master"),"refs/heads/master",true,"refs/heads/master",null);
-		    t.setCredentialsProvider(new UsernamePasswordCredentialsProvider("cjbooms", "V0nibme1"));
+		    t.setCredentialsProvider(new UsernamePasswordCredentialsProvider("cjbooms", "XXXXX"));
             t.push(NullProgressMonitor.INSTANCE, Collections.singleton(remoteRefUpdate));
 
 
