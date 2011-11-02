@@ -111,7 +111,7 @@ public class CreateNewProjectDialogWidget extends Composite implements ChangeHan
      */
     @Override
     public void onChange(ChangeEvent event) {
-        saveToLocation = (ROOT_LOCATION + folderNameBox.getText());
+        saveToLocation = (ROOT_LOCATION + "/" +  folderNameBox.getText());
     }
 
     /**

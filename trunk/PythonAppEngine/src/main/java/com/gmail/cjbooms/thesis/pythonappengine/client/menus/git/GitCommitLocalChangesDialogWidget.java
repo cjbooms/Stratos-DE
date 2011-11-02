@@ -131,7 +131,7 @@ public class GitCommitLocalChangesDialogWidget extends Composite  {
         return new Button("Commit Changes", new ClickHandler(){
             @Override
             public void onClick(ClickEvent ce) {
-               gitCommands.commitChangesToLocalRepository(SelectionHelper.getCurrentProjectPath(),logMessage,committerName,committerEmail );
+               gitCommands.commitChangesToLocalRepository(SelectionHelper.getCurrentProjectDirectory(),logMessage,committerName,committerEmail );
                commitDialog.hide();
             }
         });

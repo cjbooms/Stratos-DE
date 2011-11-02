@@ -18,6 +18,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
+
+
 /**
  * Builds the server side representation of the file tree hierarchy
  */
@@ -52,6 +54,10 @@ public class FileSystemTreeWidget extends Composite {
         return tree;
     }
 
+    /**
+     * Handle Clicks on Directories.
+     * @return
+     */
     private OpenHandler getOpenHandler() {
         return new OpenHandler() {
             @Override
@@ -60,10 +66,15 @@ public class FileSystemTreeWidget extends Composite {
                 TreeItem targetItem = (TreeItem) oe.getTarget();
                 String path = findPath(targetItem);
                 fetchTreeItems(targetItem, path);
+                SelectionHelper.setCurrentDirectory(path);
             }
         };
     }
 
+    /**
+     * Handle Clicks on Files. Which are leaf nodes
+     * @return
+     */
     private SelectionHandler getSelectionHandler() {
         return new SelectionHandler() {
             @Override

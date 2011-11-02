@@ -5,6 +5,7 @@
 
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus.git;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.OperationResultDialog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -39,14 +40,12 @@ public class GITCommands{
 
             @Override
             public void onFailure(Throwable thrwbl) {
-                //TODO Something wrong. set Dialog Message
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Clone Failure");
+                new OperationResultDialog("Clone Failure");
             }
 
             @Override
             public void onSuccess(Boolean result) {
-                 //TODO set Dialog Message using boolean result
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Clone Success");
+                new OperationResultDialog("Clone Success");
 
             }
 
@@ -69,14 +68,12 @@ public class GITCommands{
 
             @Override
             public void onFailure(Throwable thrwbl) {
-                //TODO Something wrong. set Dialog Message
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Create New Project Failure");
+                new OperationResultDialog("Create New Project Failure");
             }
 
             @Override
             public void onSuccess(Boolean result) {
-                 //TODO set Dialog Message using boolean result
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Create New Project Success");
+                new OperationResultDialog("Create New Project Success");
 
             }
 
@@ -98,15 +95,12 @@ public class GITCommands{
 
             @Override
             public void onFailure(Throwable thrwbl) {
-                //TODO Something wrong. set Dialog Message
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Commit Changes Failure");
+                new OperationResultDialog("Commit Changes Failure");
             }
 
             @Override
             public void onSuccess(Void result) {
-                 //TODO set Dialog Message using boolean result
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Commit Success");
-
+                 new OperationResultDialog("Commit Success");
             }
 
         };
@@ -127,16 +121,46 @@ public class GITCommands{
 
             @Override
             public void onFailure(Throwable thrwbl) {
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Push Changes Failure");
+                new OperationResultDialog("Push Changes Failure");
             }
 
             @Override
             public void onSuccess(Void result) {
-                GitOperationResultDialog gitOperationResultDialog = new GitOperationResultDialog("Push Success");
+                new OperationResultDialog("Push Success");
 
             }
 
         };
         gitCommandsSvc.pushLocalCommitsToRemoteRepository(filePath, remoteRepo, userName, userPassword, callback);
 
-    }}
+    }
+
+    /**
+     * Execute the RPC to add file to local repository
+     *
+     * @param pathToRepository Repository Path
+     * @param fileName name of file to add to repo
+     */
+    public void addFileToRepository(String pathToRepository, String fileName) {
+        if (this.gitCommandsSvc == null) {
+            gitCommandsSvc = GWT.create(GitCommandsService.class);
+        }
+        AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+
+            @Override
+            public void onFailure(Throwable thrwbl) {
+                new OperationResultDialog("Failed to Add File to Repository");
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                new OperationResultDialog("File Added to Repository Successfully");
+
+            }
+
+        };
+        gitCommandsSvc.addFileToRepository(pathToRepository, fileName, callback);
+
+    }
+
+}
