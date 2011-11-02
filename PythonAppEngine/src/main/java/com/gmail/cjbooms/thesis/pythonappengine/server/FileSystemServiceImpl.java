@@ -69,9 +69,9 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     }
 
     @Override
-    public Boolean deleteFile(String absoluteName) {
+    public void deleteFile(String absoluteName) {
         System.out.println("deleting : "+absoluteName);
-        return new File(absoluteName).delete();
+        new File(absoluteName).delete();
     }
 
 

@@ -19,6 +19,6 @@ public interface FileSystemService extends RemoteService{
     FileWrapper[] getDirectoryContents(FileWrapper file);
     FileWrapper[] getDirectoryContents(String file);
     String getFileContents(String file);
-    Boolean deleteFile(String absoluteName);
+    void deleteFile(String absoluteName);
     void saveFile(String absoluteName, String fileContents) throws Exception;
 }

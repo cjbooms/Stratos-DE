@@ -2,6 +2,7 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.editor;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemService;
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileSystemServiceAsync;
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.OperationResultDialog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
@@ -139,20 +140,20 @@ public class SourceCodeEditor extends Composite
 
             @Override
             public void onFailure(Throwable thrwbl) {
-                Window.alert("Error Saving. Cached Locally\n" );
+                new OperationResultDialog("Error Saving. Cached Locally");
             }
             @Override
             public void onSuccess(Boolean result) {
-                Window.alert("Saved to File System\n" );
+                 new OperationResultDialog("Saved to File System" );
             }
         };
-        try {
+//        try {
             fileSystemSvc.saveFile(filePath, fileContents, callback);
 
-        } catch (Exception e) {
+/*        } catch (Exception e) {
             GWT.log("Error Saving File" + e.getStackTrace());
             Window.alert("Error Saving. Cached Locally\n" );
-        }
+        }*/
     }
 
 

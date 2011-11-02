@@ -1,14 +1,7 @@
-package com.gmail.cjbooms.thesis.pythonappengine.client.menus.git;
+package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.*;
 
 /**
@@ -16,18 +9,18 @@ import com.google.gwt.user.client.ui.*;
  * Date: 19/09/11
  * Time: 21:43
  */
-public class GitOperationResultDialog extends Composite {
+public class OperationResultDialog extends Composite {
 
-    private DialogBox gitStatusDialog;
-    private String title = "GIT Operation Status";
+    private DialogBox statusDialog;
+    private String title = "Operation Result";
 
 
     /**
      * Default Constructor
      */
-    public GitOperationResultDialog(String message){
-        gitStatusDialog = createGitStatusDialog(message);
-        gitStatusDialog.show();
+    public OperationResultDialog(String message){
+        statusDialog = createGitStatusDialog(message);
+        statusDialog.show();
     }
 
     /**
@@ -57,7 +50,7 @@ public class GitOperationResultDialog extends Composite {
         return new Button("OK", new ClickHandler(){
             @Override
             public void onClick(ClickEvent ce) {
-                gitStatusDialog.hide();
+                statusDialog.hide();
             }
         });
     }

@@ -13,17 +13,23 @@ import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 public class SelectionHelper {
 
     private static final String ROOT_LOCATION = ConfigConstants.PROJECT_ROOT;
-    private static String currentProjectPath = "";
-
-    public static String getCurrentProjectPath() {
-        return currentProjectPath;
-    }
-
     private static String fileContents;
     private static String filePath;
     private static String editorID;
     private static SourceCodeEditor sourceCodeEditor;
 
+    private static String currentDirectory;
+    private static String currentProjectDirectory;
+
+
+
+    public static String getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    public static void setCurrentDirectory(String currentDirectory) {
+        SelectionHelper.currentDirectory = currentDirectory;
+    }
 
     /**
      * Private Constructor to enforce non-instanciation of static class
@@ -56,23 +62,30 @@ public class SelectionHelper {
 
     public static void setFilePath(String filePath) {
         SelectionHelper.filePath = filePath;
-        setCurrentProjectPath(filePath);
+        setCurrentProjectDirectory(filePath);
     }
+
 
     /**
      * Set the Project Folder Path. Update only if the root folder selection changes
      * @param filePath
      */
-    public static void setCurrentProjectPath(String filePath) {
+    public static void setCurrentProjectDirectory(String filePath) {
         int rootLength = ROOT_LOCATION.length() + 1;
         int index = filePath.indexOf("/", rootLength);
         if(index > 0){
-            SelectionHelper.currentProjectPath = filePath.substring(0,index);
+            SelectionHelper.currentProjectDirectory = filePath.substring(0,index);
         }else{
-            SelectionHelper.currentProjectPath = filePath;
+            SelectionHelper.currentProjectDirectory = filePath;
         }
 
     }
+
+    public static String getCurrentProjectDirectory() {
+        return currentProjectDirectory;
+    }
+
+
     public static String getEditorID() {
         return editorID;
     }

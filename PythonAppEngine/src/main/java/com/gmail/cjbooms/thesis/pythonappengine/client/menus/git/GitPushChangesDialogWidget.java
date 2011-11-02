@@ -1,6 +1,7 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus.git;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SelectionHelper;
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.AbstractMenuDialog;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,67 +17,31 @@ import com.google.gwt.user.client.ui.*;
  * Date: 19/09/11
  * Time: 21:43
  */
-public class GitPushChangesDialogWidget extends Composite{
+public class GitPushChangesDialogWidget extends AbstractMenuDialog {
 
-    private DialogBox pushDialog;
-    private String title = "Push Changes To Remote Repository";
-    private TextBox folderNameBox;
     private SuggestBox gitURLSuggestBox;
-    private String remoteLoginName;
-    private String remoteLoginPassword;
-    private String gitURLEntered = "";
-    private String saveToLocation = "";
-    private static final String rootLocation = ConfigConstants.PROJECT_ROOT;
-    private GITCommands gitCommands;
 
     /**
      * Default Constructor
      */
     public GitPushChangesDialogWidget(){
+        super();
+        title = "Push Changes To Remote Repository";
 
     }
 
     /**
-     * Create the GIT Push Dialog Window
-     *
-     * @return dialog The created Dialog Box
+     * Add Custom Widgets to a vertical Panel.
+     * Used to customize Dialog widget
+     * @param panel, the panel to add widgets to
      */
-    private DialogBox createPushDialog(){
-        gitCommands = new GITCommands();
-
-        DialogBox dialog = new DialogBox(true);
-        dialog.setAnimationEnabled(true);
-        dialog.center();
-        dialog.setText(title);
-        dialog.setGlassEnabled(true);
-
-        VerticalPanel panel = new VerticalPanel();
-        panel.setSpacing(5);
+    @Override
+    protected void addCustomWidgetsToDialogPanel(VerticalPanel panel) {
         panel.add(createGitURLSuggestionBox());
         panel.add(createLoginNameInput());
         panel.add(createLoginPasswordInput());
-        panel.add(createExecuteAndCancelButtons());
-
-        dialog.add(panel);
-        dialog.setAutoHideEnabled(true);
-        return dialog;
     }
 
-    private HorizontalPanel createExecuteAndCancelButtons() {
-        Button executeClone  = createExecutePushButton();
-        Button closeDialog = createCloseDialogButton();
-        return createHorizontalHolder(closeDialog, executeClone);
-
-    }
-
-    private HorizontalPanel createHorizontalHolder(Widget leftWidget, Widget rightWidget){
-        HorizontalPanel hpanel = new HorizontalPanel();
-        hpanel.setSpacing(10);
-        hpanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-        hpanel.add(leftWidget);
-        hpanel.add(rightWidget);
-        return hpanel;
-    }
 
     private VerticalPanel createLoginNameInput() {
         VerticalPanel committerInput = new VerticalPanel();
@@ -135,41 +100,30 @@ public class GitPushChangesDialogWidget extends Composite{
         return createHorizontalHolder(gitURLSuggestBox,gitURLSuggestBoxLabel);
     }
 
-
-    private Button createCloseDialogButton(){
+    @Override
+    protected Button createCloseDialogButton(){
         return new Button("close", new ClickHandler(){
             @Override
             public void onClick(ClickEvent ce) {
-                pushDialog.hide();
+                dialog.hide();
             }
         });
     }
 
-    private Button createExecutePushButton(){
+    @Override
+    protected Button createExecutePushButton(){
         return new Button("Push Changes", new ClickHandler(){
             @Override
             public void onClick(ClickEvent ce) {
-                gitCommands.pushToRemoteRepository(SelectionHelper.getCurrentProjectPath(), gitURLEntered, remoteLoginName, remoteLoginPassword);
-                pushDialog.hide();
+                String projectDirectory = SelectionHelper.getCurrentProjectDirectory();
+                gitCommands.pushToRemoteRepository(projectDirectory, gitURLEntered, remoteLoginName, remoteLoginPassword);
+                dialog.hide();
             }
         });
     }
 
 
-    /**
-     * Create the Command Object to open this dialog
-     * Used for assigning to the appropriate Menu Entry
-     *
-     * @return Open Push Dialog Command
-     */
-    public Command openDialogForGITPushCommand(){
-        return new Command() {
-            @Override
-            public void execute() {
-                pushDialog = createPushDialog();
-            }
-        };
-    }
+
 
 
 }

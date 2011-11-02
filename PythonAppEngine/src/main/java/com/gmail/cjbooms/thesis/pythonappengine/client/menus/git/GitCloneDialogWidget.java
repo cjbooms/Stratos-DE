@@ -84,7 +84,7 @@ public class GitCloneDialogWidget extends Composite implements ChangeHandler, Va
         Label folderNameBoxLabel = new Label("Enter Destination Folder");
         folderNameBox.addChangeHandler(this);
         folderNameBox.setText("NEWFOLDER");
-        saveToLocation = (rootLocation + folderNameBox.getText());
+        saveToLocation = (rootLocation + "/" + folderNameBox.getText());
         return createHorizontalHolder(folderNameBox, folderNameBoxLabel);
     }
 
@@ -156,7 +156,7 @@ public class GitCloneDialogWidget extends Composite implements ChangeHandler, Va
      */
     @Override
     public void onChange(ChangeEvent event) {
-        saveToLocation = (rootLocation + folderNameBox.getText());
+        saveToLocation = (rootLocation + "/" + folderNameBox.getText());
     }
 
     /**
