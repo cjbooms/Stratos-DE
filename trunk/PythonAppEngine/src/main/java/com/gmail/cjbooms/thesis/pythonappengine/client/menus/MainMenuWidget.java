@@ -4,6 +4,7 @@
  */
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
 
+import com.gmail.cjbooms.thesis.pythonappengine.client.menus.appengine.DeployDialog;
 import com.gmail.cjbooms.thesis.pythonappengine.client.menus.file.NewFileDialog;
 import com.gmail.cjbooms.thesis.pythonappengine.client.menus.git.*;
 import com.google.gwt.user.client.Command;
@@ -22,6 +23,8 @@ public class MainMenuWidget extends Composite {
     private GitPushChangesDialogWidget gitPushDialogWidget;
     private CreateNewProjectDialogWidget createNewProjectDialogWidget;
     private NewFileDialog newFileDialog;
+    private DeployDialog deployDialog;
+
 
 
     public MainMenuWidget() {
@@ -30,6 +33,7 @@ public class MainMenuWidget extends Composite {
         createNewProjectDialogWidget = new CreateNewProjectDialogWidget();
         gitPushDialogWidget = new GitPushChangesDialogWidget();
         newFileDialog = new NewFileDialog();
+        deployDialog = new DeployDialog();
         createMenu();
         initWidget(menu);
     }
@@ -53,7 +57,7 @@ public class MainMenuWidget extends Composite {
 
     private MenuBar createAppEngineMenu() {
         MenuBar appEngineMenu = new MenuBar(true);
-        appEngineMenu.addItem("Deploy", createBlankCommand());
+        appEngineMenu.addItem("Deploy", deployDialog.openMenuDialog());
         return appEngineMenu;
     }
 

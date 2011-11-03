@@ -50,7 +50,7 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
         try {
             return Utilities.fileToString(file);
         } catch (IOException e) {
-            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            //e.printStackTrace();  //TODO
         }
         return null;
     }
