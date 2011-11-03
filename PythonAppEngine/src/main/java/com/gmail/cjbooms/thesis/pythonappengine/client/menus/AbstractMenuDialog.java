@@ -109,42 +109,6 @@ public abstract class AbstractMenuDialog extends Composite {
     }
 
     /**
-     * Create login name entry widget
-     * @return vertical panel housing login name entry
-     */
-    private VerticalPanel createLoginNameInput() {
-        VerticalPanel committerInput = new VerticalPanel();
-        committerInput.add(new Label("Login User Name:"));
-        TextBox committerNameTextBox = new TextBox();
-        committerNameTextBox.addValueChangeHandler(new ValueChangeHandler<String>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<String> event) {
-                remoteLoginName = event.getValue();
-            }
-        });
-        committerInput.add(committerNameTextBox);
-        return committerInput;
-    }
-
-    /**
-     * Create login password entry widget
-     * @return vertical panel housing password entry
-     */
-    private VerticalPanel createLoginPasswordInput() {
-        VerticalPanel committerInput = new VerticalPanel();
-        committerInput.add(new Label("Login Password:"));
-        PasswordTextBox committerNameTextBox = new PasswordTextBox();
-        committerNameTextBox.addValueChangeHandler(new ValueChangeHandler<String>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<String> event) {
-                remoteLoginPassword = event.getValue();
-            }
-        });
-        committerInput.add(committerNameTextBox);
-        return committerInput;
-    }
-
-    /**
      * Close Button
      * @return
      */
@@ -157,6 +121,41 @@ public abstract class AbstractMenuDialog extends Composite {
         });
     }
 
+    /**
+     * Create login name entry widget
+     * @return vertical panel housing login name entry
+     */
+    protected VerticalPanel createLoginNameInput() {
+        VerticalPanel loginPanel = new VerticalPanel();
+        loginPanel.add(new Label("Login User Name:"));
+        TextBox loginTextBox = new TextBox();
+        loginTextBox.addValueChangeHandler(new ValueChangeHandler<String>() {
+            @Override
+            public void onValueChange(ValueChangeEvent<String> event) {
+                remoteLoginName = event.getValue();
+            }
+        });
+        loginPanel.add(loginTextBox);
+        return loginPanel;
+    }
+
+    /**
+     * Create login password entry widget
+     * @return vertical panel housing password entry
+     */
+    protected VerticalPanel createLoginPasswordInput() {
+        VerticalPanel passwordPanel = new VerticalPanel();
+        passwordPanel.add(new Label("Login Password:"));
+        PasswordTextBox passwordTextBox = new PasswordTextBox();
+        passwordTextBox.addValueChangeHandler(new ValueChangeHandler<String>() {
+            @Override
+            public void onValueChange(ValueChangeEvent<String> event) {
+                remoteLoginPassword = event.getValue();
+            }
+        });
+        passwordPanel.add(passwordTextBox);
+        return passwordPanel;
+    }
 
     /**
      * Add Custom Widgets to a vertical Panel.

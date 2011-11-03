@@ -43,35 +43,6 @@ public class GitPushChangesDialogWidget extends AbstractMenuDialog {
     }
 
 
-    private VerticalPanel createLoginNameInput() {
-        VerticalPanel committerInput = new VerticalPanel();
-        committerInput.add(new Label("Login User Name:"));
-        TextBox committerNameTextBox = new TextBox();
-        committerNameTextBox.addValueChangeHandler(new ValueChangeHandler<String>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<String> event) {
-                remoteLoginName = event.getValue();
-            }
-        });
-        committerInput.add(committerNameTextBox);
-        return committerInput;
-    }
-
-
-    private VerticalPanel createLoginPasswordInput() {
-        VerticalPanel committerInput = new VerticalPanel();
-        committerInput.add(new Label("Login Password:"));
-        PasswordTextBox committerNameTextBox = new PasswordTextBox();
-        committerNameTextBox.addValueChangeHandler(new ValueChangeHandler<String>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<String> event) {
-                remoteLoginPassword = event.getValue();
-            }
-        });
-        committerInput.add(committerNameTextBox);
-        return committerInput;
-    }
-
     /**
      * Create a Suggestion Box for GIT URLS
      * TODO - Populate the suggestion oracle dynamically with previously used GIT repos

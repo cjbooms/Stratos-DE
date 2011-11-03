@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.io.IOException;
 
 /**
- *
+ * File System Functions
  */
 public interface FileSystemServiceAsync {
     void getDirectoryContents(FileWrapper file, AsyncCallback<FileWrapper[]> callback);
