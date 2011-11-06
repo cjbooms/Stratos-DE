@@ -1,6 +1,5 @@
 package com.gmail.cjbooms.thesis.pythonappengine.server;
 
-import com.gmail.cjbooms.thesis.pythonappengine.client.PythonAppEngine;
 import com.gmail.cjbooms.thesis.pythonappengine.client.appengine.AppEngineService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -26,9 +25,8 @@ public class AppEngineServiceImpl extends RemoteServiceServlet implements AppEng
     public String deployToAppEngine(String email, String password, String projectPath) {
         try
         {
-            String eol = System.getProperty("line.separator");
             String login = EMAIL + email;
-            String output = "";
+            String output;
             ProcessBuilder builder = new ProcessBuilder(PYTHON, DEPLOY, login, PASSIN, UPDATE, projectPath);
             builder.redirectErrorStream(true);
 
@@ -41,7 +39,7 @@ public class AppEngineServiceImpl extends RemoteServiceServlet implements AppEng
             out.flush();
             out.close();
 
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             String line;
             while ((line = input.readLine()) != null)
             {
