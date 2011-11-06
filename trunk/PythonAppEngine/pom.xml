@@ -6,32 +6,28 @@
     <properties>
 
         <!-- put your app name here -->
-	   <app.name>PythonAppEngine</app.name>
+        <app.name>PythonAppEngine</app.name>
 
         <!-- put your app group id here -->
-	   <group.id>PythonAppEngine</group.id>
+        <group.id>PythonAppEngine</group.id>
 
         <!-- put your app artifact id here -->
-	   <artifact.id>PythonAppEngine</artifact.id>
+        <artifact.id>PythonAppEngine</artifact.id>
 
         <!-- This is just for "eclipse:eclipse" goal to always attempt downloading sources -->
         <downloadSources>true</downloadSources>
-        
-        <!-- Specify AppEngine version for your project. It should match SDK version pointed to
-            by ${gae.home} property (Typically, one used by your Eclipse plug-in) -->
-        <gae.version>1.4.0</gae.version>
-        
-        <!-- GWT version -->
-        <gwt.version>2.3.0</gwt.version>
 
-        <!-- Upload to http://test.latest.<applicationName>.appspot.com by default -->
-        <gae.application.version>test</gae.application.version>
+        <!-- GWT version -->
+        <gwt.version>2.4.0</gwt.version>
 
         <!-- port defaults to 8080 -->
-        <gae.port>9999</gae.port>
+        <gwt.port>9999</gwt.port>
 
         <!-- Produce detailed JS during GWT compilation for development environment -->
         <gwt.style>DETAILED</gwt.style>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
 
@@ -46,8 +42,8 @@
     <repositories>
         <!-- GIT SCM library repository location -->
         <repository>
-          <id>jgit-repository</id>
-          <url>http://download.eclipse.org/jgit/maven</url>
+            <id>jgit-repository</id>
+            <url>http://download.eclipse.org/jgit/maven</url>
         </repository>
     </repositories>
 
@@ -55,48 +51,42 @@
     <!-- Standard Project Dependencies -->
     <dependencies>
 
-    <!-- START JGIT GIT SCM libraries -->
+        <!-- START JGIT GIT SCM libraries -->
         <dependency>
-          <groupId>org.eclipse.jgit</groupId>
-          <artifactId>org.eclipse.jgit</artifactId>
-          <version>1.0.0.201106090707-r</version>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>1.1.0.201109151100-r</version>
         </dependency>
         <!-- Smart HTTP Servlet -->
         <dependency>
-          <groupId>org.eclipse.jgit</groupId>
-          <artifactId>org.eclipse.jgit.http.server</artifactId>
-          <version>1.0.0.201106090707-r</version>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.http.server</artifactId>
+            <version>1.1.0.201109151100-r</version>
         </dependency>
         <!-- AWT UI Helpers -->
         <dependency>
-          <groupId>org.eclipse.jgit</groupId>
-          <artifactId>org.eclipse.jgit.ui</artifactId>
-          <version>1.0.0.201106090707-r</version>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.ui</artifactId>
+            <version>1.1.0.201109151100-r</version>
         </dependency>
         <!-- JUnit Test Support -->
         <dependency>
-          <groupId>org.eclipse.jgit</groupId>
-          <artifactId>org.eclipse.jgit.junit</artifactId>
-          <version>1.0.0.201106090707-r</version>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.junit</artifactId>
+            <version>1.1.0.201109151100-r</version>
         </dependency>
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.44-1</version>
-        </dependency>
-    <!-- END JGIT GIT SCM libraries -->
+        <!-- END JGIT GIT SCM libraries -->
 
 
         <!-- JUnit for Unit Testing -->
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.8.2</version>
-          <type>jar</type>
-          <scope>test</scope>
-          <optional>true</optional>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <type>jar</type>
+            <scope>test</scope>
+            <optional>true</optional>
         </dependency>
-
 
 
         <!-- GWT dependencies -->
@@ -145,71 +135,30 @@
             <scope>runtime</scope>
         </dependency>
 
-  
 
     </dependencies>
 
-<build>
-        <plugins>
-             <!-- Data Nucleus is a a Java data management platform (like Hibernate)-->
-            <plugin>
-                <groupId>org.datanucleus</groupId>
-                <artifactId>maven-datanucleus-plugin</artifactId>
-                <version>1.1.4</version>
-                <configuration>
-                    <mappingIncludes>**/model/*.class</mappingIncludes>
-                    <verbose>true</verbose>
-                    <enhancerName>ASM</enhancerName>
-                    <api>JDO</api>
-                </configuration>
-                <executions>
-                  <!--    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                    </execution> -->
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.datanucleus</groupId>
-                        <artifactId>datanucleus-core</artifactId>
-                        <version>1.1.5</version>
-                        <exclusions>
-                            <exclusion>
-                                <groupId>javax.transaction</groupId>
-                                <artifactId>transaction-api</artifactId>
-                            </exclusion>
-                        </exclusions>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.datanucleus</groupId>
-                        <artifactId>datanucleus-rdbms</artifactId>
-                        <version>1.1.5</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.datanucleus</groupId>
-                        <artifactId>datanucleus-enhancer</artifactId>
-                        <version>1.1.4</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>javax.jdo</groupId>
-                        <artifactId>jdo2-api</artifactId>
-                        <version>2.3-eb</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.datanucleus</groupId>
-                        <artifactId>datanucleus-jpa</artifactId>
-                        <version>1.1.5</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+    <build>
+        <!--suppress MavenModelInspection -->
+        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
+        <!-- To define the plugin version in your parent POM -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>gwt-maven-plugin</artifactId>
+                    <version>2.4.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 
+        <!-- To use the plugin goals in your POM or parent POM -->
+        <plugins>
             <!-- Maven WAR plugin. Declare Web Resource Directory -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.1.1</version>
                 <configuration>
                     <webResources>
                         <resource>
@@ -229,68 +178,11 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.3.0-1</version>
+                <version>2.4.0</version>
                 <configuration>
-                    <logLevel>INFO</logLevel>
-
-                    <!-- match -Dgae.port -->
-                    <port>${gae.port}</port>
-
-                    <!-- This is for generating Asynch interfaces -->
-                    <!-- <servicePattern>**/client/*Service.java</servicePattern> -->
-
-                    <extraJvmArgs>-Xmx512m</extraJvmArgs>
-                    <!--<jvm>${JAVA_HOME}/bin/java</jvm> -->
-                    <!--<noServer>false</noServer> -->
-                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
-
+                    <port>${gwt.port}</port>
+                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                     <runTarget>/PythonAppEngine.html</runTarget>
-                    <style>DETAILED</style>
-                    <webXml>webapp/WEB-INF/web.xml</webXml>
-                </configuration>
-                <executions>
-                     <execution> <id>generateAsynch</id> <phase>generate-sources</phase> <goals>
-                        <goal>generateAsync</goal> </goals> </execution> 
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Maven Google AppEngine (GAE) Plugin-->
-            <plugin>
-                <groupId>net.kindleit</groupId>
-                <artifactId>maven-gae-plugin</artifactId>
-                <version>0.8.1</version>
-                <configuration>
-                    <jvmFlags>
-                        <jvmFlag>-Xdebug</jvmFlag>
-                        <jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
-                        <jvmFlag>-Dmail.log_mail_level=WARNING</jvmFlag>
-                        <jvmFlag>-Dmail.log_mail_body=true</jvmFlag>
-                    </jvmFlags>
-                    <serverId>appengine.google.com</serverId>
-                    <severity>0</severity>
-                    <serverId>funny-pages</serverId>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.kindleit</groupId>
-                        <artifactId>gae-runtime</artifactId>
-                        <version>${gae.version}</version>
-                        <type>pom</type>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <!-- Upload application to the appspot automatically, during release:perform -->
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <goals>gae:deploy</goals>
                 </configuration>
             </plugin>
 
@@ -307,59 +199,27 @@
     </build>
 
 
-
-	<profiles>
+    <profiles>
         <!-- Declare default-tools. Just for sanity  -->
-	    <profile>
-	      <id>default-tools.jar</id>
-	      <activation>
-	        <property>
-	          <name>java.vendor</name>
-	          <value>Sun Microsystems Inc.</value>
-	        </property>
-	      </activation>
-	      <dependencies>
-	        <dependency>
-	          <groupId>com.sun</groupId>
-	          <artifactId>tools</artifactId>
-	          <version>1.6</version>
-	          <scope>system</scope>
-	          <systemPath>${java.home}/../lib/tools.jar</systemPath>
-	        </dependency>
-	      </dependencies>
-	    </profile>
-
-       <!-- We can configure our integration server to activate this profile and perform gae:deploy,
-            thus uploading latest snapshot to the http://1.latest.<applicationName>.appspot.com automatically -->
         <profile>
-            <id>integration-build</id>
-            <properties>
-                <gae.application.version>stage</gae.application.version>
-
-                <!-- Produce pretty JS during GWT compilation for test environment -->
-                <gwt.style>PRETTY</gwt.style>
-            </properties>
-        </profile>
-
-        <!-- This profile will activate automatically during release and upload application to
-            the http://2.latest.<applicationName>.appspot.com (We might want to set the 2nd version as
-            our applications Default version to be accessible at http://<applicationName>.appspot.com) -->
-        <profile>
-            <id>release-build</id>
+            <id>default-tools.jar</id>
             <activation>
                 <property>
-                    <name>performRelease</name>
-                    <value>true</value>
+                    <name>java.vendor</name>
+                    <value>Sun Microsystems Inc.</value>
                 </property>
             </activation>
-
-            <properties>
-                <!-- During release, set application version in appengine-web.xml to 2 -->
-                <gae.application.version>release</gae.application.version>
-
-                <!-- Produce compressed JS during GWT compilation for production environment -->
-                <gwt.style>OBFUSCATED</gwt.style>
-            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                    <version>1.6</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
         </profile>
+
+
     </profiles>
-  </project>
+</project>
