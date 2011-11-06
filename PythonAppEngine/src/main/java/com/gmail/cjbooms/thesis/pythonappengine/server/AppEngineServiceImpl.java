@@ -15,9 +15,11 @@ import java.io.*;
 public class AppEngineServiceImpl extends RemoteServiceServlet implements AppEngineService {
 
     private static final String PYTHON = "/usr/bin/python2.5";
-    private static final String DEPLOY = "/home/webapp/root/google_appengine/appcfg.py";
+    private static final String DEPLOY = "/home/webapp/google_appengine/appcfg.py";
     private static final String EMAIL = "--email=";
     private static final String PASSIN = "--passin";
+    private static final String UPDATE = "update";
+
 
 
 
@@ -28,7 +30,7 @@ public class AppEngineServiceImpl extends RemoteServiceServlet implements AppEng
             String eol = System.getProperty("line.separator");
             String login = EMAIL + email;
             String output = "";
-            ProcessBuilder builder = new ProcessBuilder(PYTHON, DEPLOY, login, PASSIN, projectPath);
+            ProcessBuilder builder = new ProcessBuilder(PYTHON, DEPLOY, login, PASSIN, UPDATE, projectPath);
             builder.redirectErrorStream(true);
 
             // start process and get output via BufferedReader
@@ -40,12 +42,16 @@ public class AppEngineServiceImpl extends RemoteServiceServlet implements AppEng
             out.flush();
             out.close();
 
-            String line = "";
+            StringBuffer buf = new StringBuffer();
+            String line;
             while ((line = input.readLine()) != null)
             {
-                output = output + line;
+                buf.append(line);
             }
+            output = buf.toString();
+
             process.waitFor();
+            input.close();
             return output;
         }
         catch (IOException e)
