@@ -89,7 +89,7 @@ public class FileWrapper implements Serializable {
             return FileType.IMG;
         if(ext.equals("py"))
             return FileType.PYTHON;
-        if(ext.equals("rb"))
+        if(ext.equals("ru"))
             return FileType.RUBY;
         return FileType.OTHER;
 
