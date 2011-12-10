@@ -101,6 +101,11 @@
             <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
         <!-- END GWT-->
 
         <!-- Apache Commons to Simplify Java IO -->
@@ -139,6 +144,16 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/images</directory>
+                <targetPath>images</targetPath>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+       </resources>
+
         <!--suppress MavenModelInspection -->
         <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
         <!-- To define the plugin version in your parent POM -->

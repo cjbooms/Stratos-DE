@@ -22,6 +22,8 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     private static final long serialVersionUID = 1L;
     private static SimpleDateFormat dateFormater;
 
+    private boolean displayHidden = false;
+
     static{
         dateFormater = new SimpleDateFormat("MMM d, yy");
     }
@@ -56,17 +58,31 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     }
 
 
+    /**
+     * Create a list of all File details using File Wrapper
+     * Determine if File is to be added based on displayHidden
+     * @param files List of java file objects
+     * @return wrappedFiles The list of wrapped files
+     */
     private FileWrapper[] buildFilesList(File[] files) {
 
-        FileWrapper[] result = new FileWrapper[files.length];
-        for (int i = 0; i < files.length; i++) {
-            result[i] = new FileWrapper(files[i].getAbsolutePath(), files[i].getName(), dateFormat( files[i].lastModified()));
-            if (files[i].isDirectory()) {
-                result[i].setIsDirectory();
+        FileWrapper[] wrappedFiles = new FileWrapper[files.length];
+        int i = 0;
+        for (File currentFile :files) {
+            String path = currentFile.getAbsolutePath();
+            String fileName = currentFile.getName();
+            String modified = dateFormat( currentFile.lastModified());
+            if(!(fileName.startsWith(".") && !displayHidden)) {
+                wrappedFiles[i] = new FileWrapper(path, fileName, modified);
+                if (files[i].isDirectory()) {
+                    wrappedFiles[i].setIsDirectory();
+                }
+                i++;
             }
         }
-        return result;
+        return wrappedFiles;
     }
+
 
     @Override
     public void deleteFile(String absoluteName) {
@@ -83,4 +99,19 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
         FileUtils.fileWrite(absoluteName, fileContents);
     }
 
+    /**
+     * Should hidden files be displayed?
+     * @return
+     */
+    public boolean isDisplayHidden() {
+        return displayHidden;
+    }
+
+    /**
+     * Set whether to display hidden files and folders.
+     * @param displayHidden
+     */
+    public void setDisplayHidden(boolean displayHidden) {
+        this.displayHidden = displayHidden;
+    }
 }

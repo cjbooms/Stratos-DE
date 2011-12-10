@@ -6,6 +6,7 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SelectionHelper;
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
+import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets.TreeItemWidget;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.OpenEvent;
@@ -42,15 +43,19 @@ public class FileSystemTreeWidget extends Composite {
     }
 
 
+    /**
+     * Create Empty Tree
+     * @return
+     */
     private Tree createFileSystemTree() {
         tree = new Tree();
         tree.setAnimationEnabled(true);
-        TreeItem tItem = new TreeItem(treeTitle);
+        TreeItem tItem = new TreeItem(new TreeItemWidget(FileType.DIR, "Available Projects"));
         tItem.addItem("Loading...");
         tree.addOpenHandler(getOpenHandler());
         tree.addSelectionHandler(getSelectionHandler());
         tree.addItem(tItem);
-        tree.setSelectedItem(tItem, true);
+        //tree.setSelectedItem(tItem, true);
         return tree;
     }
 
@@ -80,15 +85,11 @@ public class FileSystemTreeWidget extends Composite {
             @Override
             public void onSelection(SelectionEvent se) {
                 TreeItem selectedItem = (TreeItem) se.getSelectedItem();
-                //TODO instead of finding path, find the contents if a document
                 String path = findPath(selectedItem);
                 getFileContentsAsString(path);
                 footer.setHTML("Current path : "+path);
                 SelectionHelper.setFilePath(path);
-
             }
-
-
         };
     }
 
@@ -157,15 +158,16 @@ public class FileSystemTreeWidget extends Composite {
     private void expandTreeItem(TreeItem father, FileWrapper[] files) {
         father.removeItems();
         for (FileWrapper file : files) {
+            TreeItemWidget fileTreeNode = new TreeItemWidget(file.getKind(), file.getName());
             // Add new branch node
             if (file.getKind() == FileType.DIR) {
-                TreeItem newItem = new TreeItem(file.getName());
+                TreeItem newItem = new TreeItem(fileTreeNode);
                 father.addItem(newItem);
                 newItem.addItem("Loading...");
             }
             // Add Leaf
             else{
-                father.addItem(file.getName());
+                father.addItem(fileTreeNode);
             }
         }
     }
