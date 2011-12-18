@@ -1,4 +1,4 @@
-package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets;
+package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.FileType;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.MyResources;
@@ -51,8 +51,12 @@ public class TreeItemWidget extends Composite {
                 return new Image(resources.pythonFile());
             case RUBY:
                 return new Image(resources.rubyFile());
+            case TABULAR:
+                return new Image(resources.tableFile());
+            case SHEET:
+                return new Image(resources.spreadsheetFile());
             default :
-                return new Image(resources.documentFile());
+                return new Image(resources.blankFile());
         }
     }
 }

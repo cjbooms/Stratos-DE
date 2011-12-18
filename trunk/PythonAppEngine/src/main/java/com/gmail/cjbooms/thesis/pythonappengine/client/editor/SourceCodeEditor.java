@@ -172,7 +172,7 @@ public class SourceCodeEditor extends Composite {
             word_wrap       : true,
             language        : "en",
             syntax          : syntax,
-            toolbar: "new_document, save, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
+            toolbar: "save, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
             save_callback: "save"
         });
     }-*/;

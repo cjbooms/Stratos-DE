@@ -1,40 +1,100 @@
 /** Add css rules here for your application. */
 
 
-/** Example rules used by the template application (remove for your app)
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
-}                        */
-
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
+/** Example rules used by the template application (remove for your app)  */
 
 
-.dialogVPanel {
-  margin: 5px;
-}
-
-.serverResponseLabelError {
-  color: red;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
-}
 
 #pa-footer{
-	padding:4px;
-        background-color: #b7d6f6;
+	background-color: #DEDEDE;
+	background-image: url(/imgs/background.png);
+	background-position: 0px -96px;
+	padding: 4px;
+	border-top: solid 1px #BDCFFF;
 	color:gray;
         font-weight: bold;
         text-align: right;
         padding-right: 30px;
 }
+
+
+#pa-header{
+	padding:4px;
+    background-image: url(/imgs/background-tb.png);
+	color:black;
+        font-weight: bold;
+        text-align: left;
+        padding-left: 10px;
+    font-size: 14pt;
+}
+
+/** Tools Panel */
+.lab-Tools-Panel{
+	background-color: #E5E5E5;
+	background-image: url(/imgs/background-tb.png);
+	background-position: 0px 0px;
+	padding: 3px;
+}
+.lab-Toolbar {
+	background-color: #E5E5E5;
+    background-image: url(/imgs/background-tb.png);
+	background-repeat: repeat-x;
+}
+.lab-Toolbar * {
+	display:-moz-inline-stack;
+	display:inline-block;
+	zoom:1;
+	*display:inline;
+}
+.lab-Toolbar .separator {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+.lab-Toolbar .gwt-PushButton {
+	background-image: none;
+	margin-left: 1px;
+	padding: 5px;
+}
+.lab-Toolbar .gwt-PushButton-up{
+	border: 0px;
+	padding: 5px;
+}
+.lab-Toolbar .gwt-PushButton-up-hovering{
+	border: solid 1px #A1BADF;
+	padding: 4px;
+}
+.lab-Toolbar .gwt-PushButton-down-hovering{
+	border: solid 1px #A1BADF;
+	background-color: #DDE1EB;
+	padding: 4px;
+}
+
+.gwt-MenuBar-vertical{
+	border-top: solid 1px #CECFCE;
+	border-left: solid 1px #CECFCE;
+	border-right: solid 1px #636563;
+	border-bottom: solid 1px #636563;
+}
+.gwt-MenuBar-vertical .gwt-MenuItemSeparator{
+}
+.gwt-MenuBar-vertical .gwt-MenuItemSeparator .menuSeparatorInner{
+	height: 1px;
+	padding: 0px;
+	border: 0px;
+	background: #CECFCE;
+	overflow: hidden;
+}
+.gwt-MenuBar-vertical .gwt-MenuItem{
+	font-family: Arial;
+	font-weight: normal;
+	font-size: 12px;
+	color: #333333;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 6px;
+	width: 210px;
+	white-space: nowrap;
+}
+
+
 
