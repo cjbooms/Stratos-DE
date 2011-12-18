@@ -81,15 +81,17 @@ public class FileWrapper implements Serializable {
      * @return
      */
     private FileType getFileType(String ext) {
-        if(ext.equals("doc") || ext.equals("pdf") || ext.equals("ppt") || ext.equals("html"))
+        if(ext.equals("doc") || ext.equals("pdf") || ext.equals("html") || ext.equals("ppt"))
             return FileType.DOC;
+        if(ext.equals("xls")  || ext.equals("xlsx"))
+            return FileType.SHEET;
         if(ext.equals("avi") || ext.equals("wnv") || ext.equals("mpeg") || ext.equals("mov") || ext.equals("mp3"))
             return FileType.MM;
         if(ext.equals("gif") || ext.equals("jpg") || ext.equals("png") || ext.equals("tif") || ext.equals("psd"))
             return FileType.IMG;
         if(ext.equals("py"))
             return FileType.PYTHON;
-        if(ext.equals("ru"))
+        if(ext.equals("ru") || ext.equals("rb") || ext.equals("fcgi"))
             return FileType.RUBY;
         return FileType.OTHER;
 

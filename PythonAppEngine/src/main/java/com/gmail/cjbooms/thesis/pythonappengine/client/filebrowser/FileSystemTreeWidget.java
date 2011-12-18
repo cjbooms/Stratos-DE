@@ -6,7 +6,6 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SelectionHelper;
 import com.gmail.cjbooms.thesis.pythonappengine.client.editor.SourceCodeEditor;
-import com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser.widgets.TreeItemWidget;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.ConfigConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.OpenEvent;

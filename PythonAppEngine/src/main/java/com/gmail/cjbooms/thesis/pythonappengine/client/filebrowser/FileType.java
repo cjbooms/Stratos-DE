@@ -8,5 +8,5 @@ package com.gmail.cjbooms.thesis.pythonappengine.client.filebrowser;
  *
  */
 public enum FileType {
-    DIR, IMG, DOC, MM, PYTHON, RUBY, JAVA, OTHER
+    DIR, IMG, DOC, MM, PYTHON, RUBY, TABULAR, SHEET, JAVA, OTHER
 };
