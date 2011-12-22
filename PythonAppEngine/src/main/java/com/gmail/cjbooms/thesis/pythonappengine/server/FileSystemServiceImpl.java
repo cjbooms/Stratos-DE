@@ -33,7 +33,7 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     }
 
     @Override
-    public FileWrapper[] getDirectoryContents(FileWrapper file) {
+    public FileWrapper[] getDirectoryContents(FileWrapper file) throws IOException {
         File fsFile = new File(file.getPath());
         if (fsFile.isDirectory()) {
             return this.buildFilesList(fsFile.listFiles());
@@ -42,19 +42,14 @@ public class FileSystemServiceImpl extends RemoteServiceServlet implements FileS
     }
 
     @Override
-    public FileWrapper[] getDirectoryContents(String file) {
+    public FileWrapper[] getDirectoryContents(String file) throws IOException {
         return this.getDirectoryContents(new FileWrapper(file));
     }
 
 
     @Override
-    public String getFileContents(String file) {
-        try {
-            return Utilities.fileToString(file);
-        } catch (IOException e) {
-            //e.printStackTrace();  //TODO
-        }
-        return null;
+    public String getFileContents(String file) throws IOException {
+        return Utilities.fileToString(file);
     }
 
 

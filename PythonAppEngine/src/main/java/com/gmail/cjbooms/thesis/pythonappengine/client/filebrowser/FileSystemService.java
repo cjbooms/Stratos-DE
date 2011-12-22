@@ -16,9 +16,9 @@ import java.io.IOException;
 
 @RemoteServiceRelativePath("fs")
 public interface FileSystemService extends RemoteService{
-    FileWrapper[] getDirectoryContents(FileWrapper file);
-    FileWrapper[] getDirectoryContents(String file);
-    String getFileContents(String file);
+    FileWrapper[] getDirectoryContents(FileWrapper file) throws IOException;
+    FileWrapper[] getDirectoryContents(String file) throws IOException;
+    String getFileContents(String file) throws IOException;
     void deleteFile(String absoluteName);
     void saveFile(String absoluteName, String fileContents) throws Exception;
 }

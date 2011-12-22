@@ -19,7 +19,7 @@ public class SourceCodeEditor extends Composite {
     private final String syntax;
 
     private final TextArea editAreaContent;
-    private final VerticalPanel main = new VerticalPanel();
+    private final VerticalPanel editAreaHolderPanel = new VerticalPanel();
     private static FileSystemServiceAsync fileSystemSvc = GWT.create(FileSystemService.class);
 
     private boolean initialized = false;
@@ -45,11 +45,11 @@ public class SourceCodeEditor extends Composite {
         editAreaContent.getElement().getStyle().setProperty("resize", "none");
         editAreaContent.setVisibleLines(30);
 
-        main.add(editAreaContent);
-        initWidget(main);
+        editAreaHolderPanel.add(editAreaContent);
+        initWidget(editAreaHolderPanel);
 
-        main.setCellWidth(editAreaContent, "100%");
-        main.setCellHeight(editAreaContent, "100%");
+        editAreaHolderPanel.setCellWidth(editAreaContent, "100%");
+        editAreaHolderPanel.setCellHeight(editAreaContent, "100%");
 
         SelectionHelper.setSourceCodeEditor(this);
         SelectionHelper.setEditorID(id);
@@ -109,7 +109,7 @@ public class SourceCodeEditor extends Composite {
     @Override
     public void setWidth(String width) {
         super.setWidth(width);
-        main.setWidth(width);
+        editAreaHolderPanel.setWidth(width);
         editAreaContent.setWidth(width);
     }
 
@@ -121,7 +121,7 @@ public class SourceCodeEditor extends Composite {
     @Override
     public void setHeight(String height) {
         super.setHeight(height);
-        main.setHeight(height);
+        editAreaHolderPanel.setHeight(height);
         editAreaContent.setHeight("100%");
     }
 
