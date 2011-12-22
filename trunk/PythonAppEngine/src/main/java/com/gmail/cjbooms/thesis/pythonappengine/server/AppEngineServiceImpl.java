@@ -43,7 +43,7 @@ public class AppEngineServiceImpl extends RemoteServiceServlet implements AppEng
             String line;
             while ((line = input.readLine()) != null)
             {
-                buf.append(line);
+                buf.append(line + "\n");
             }
             output = buf.toString();
 

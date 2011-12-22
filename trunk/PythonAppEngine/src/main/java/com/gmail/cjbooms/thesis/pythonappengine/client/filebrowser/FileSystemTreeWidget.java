@@ -86,7 +86,9 @@ public class FileSystemTreeWidget extends Composite {
                 TreeItem selectedItem = (TreeItem) se.getSelectedItem();
                 String path = findPath(selectedItem);
                 getFileContentsAsString(path);
-                footer.setHTML("Current path : "+path);
+                // Current File path in the project context
+                String fileContext = path.substring(rootFolder.length() + 1);
+                footer.setHTML("Selected File : " + fileContext);
                 SelectionHelper.setFilePath(path);
             }
         };

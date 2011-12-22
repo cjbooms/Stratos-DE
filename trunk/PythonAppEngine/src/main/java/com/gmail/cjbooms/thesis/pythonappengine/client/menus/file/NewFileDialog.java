@@ -45,7 +45,7 @@ public class NewFileDialog extends AbstractMenuDialog {
 
 
     private HorizontalPanel createGitAddCheclBox() {
-        Label label = new Label("Add File To GIT Repository");
+        Label label = new Label("");
         CheckBox checkbox = new CheckBox("Add To GIT");
         checkbox.setValue(true);
         checkbox.addClickHandler(new ClickHandler() {

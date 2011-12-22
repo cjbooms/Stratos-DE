@@ -1,7 +1,6 @@
 package com.gmail.cjbooms.thesis.pythonappengine.client.menus;
 
 import com.gmail.cjbooms.thesis.pythonappengine.client.menus.appengine.DeployDialog;
-import com.gmail.cjbooms.thesis.pythonappengine.client.menus.file.NewFileDialog;
 import com.gmail.cjbooms.thesis.pythonappengine.client.menus.git.CreateNewProjectDialogWidget;
 import com.gmail.cjbooms.thesis.pythonappengine.client.menus.git.GitCloneDialogWidget;
 import com.gmail.cjbooms.thesis.pythonappengine.shared.MyResources;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
  */
 public class Toolbar extends Composite {
     MyResources resources;
-    private HorizontalPanel bar;
+    private HorizontalPanel toolBar;
     private ArrayList<Widget> buttons;
 
     /**
@@ -32,12 +31,12 @@ public class Toolbar extends Composite {
     public Toolbar() {
         resources = GWT.create(MyResources.class);
         buttons = new ArrayList<Widget>();
-        bar = new HorizontalPanel();
-        bar.setHeight("30px");
-        bar.setWidth("100%");
-        bar.setStylePrimaryName("lab-Tools-Panel");
-        bar.add(buildToolBar());
-        initWidget(bar);
+        toolBar = new HorizontalPanel();
+        toolBar.setHeight("30px");
+        toolBar.setWidth("100%");
+        toolBar.setStylePrimaryName("lab-Tools-Panel");
+        toolBar.add(buildToolBar());
+        initWidget(toolBar);
     }
 
     public void setButtonState(String title, boolean down) {

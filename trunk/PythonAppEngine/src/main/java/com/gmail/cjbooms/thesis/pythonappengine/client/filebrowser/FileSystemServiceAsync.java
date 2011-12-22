@@ -13,8 +13,8 @@ import java.io.IOException;
  * File System Functions
  */
 public interface FileSystemServiceAsync {
-    void getDirectoryContents(FileWrapper file, AsyncCallback<FileWrapper[]> callback);
-    void getDirectoryContents(String file, AsyncCallback<FileWrapper[]> async);
+    void getDirectoryContents(FileWrapper file, AsyncCallback<FileWrapper[]> callback) ;
+    void getDirectoryContents(String file, AsyncCallback<FileWrapper[]> async) ;
     void deleteFile(String absoluteName, AsyncCallback async);
     void getFileContents(String file, AsyncCallback<String> async);
     void saveFile(String absoluteName, String fileContents, AsyncCallback async);

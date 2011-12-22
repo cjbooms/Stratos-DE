@@ -7,7 +7,7 @@
 
 #pa-footer{
 	background-color: #DEDEDE;
-	background-image: url(/imgs/background.png);
+	background-image: url(imgs/background.png);
 	background-position: 0px -96px;
 	padding: 4px;
 	border-top: solid 1px #BDCFFF;
@@ -20,24 +20,24 @@
 
 #pa-header{
 	padding:4px;
-    background-image: url(/imgs/background-tb.png);
+    background-image: url(imgs/background-tb.png);
 	color:black;
         font-weight: bold;
         text-align: left;
         padding-left: 10px;
-    font-size: 14pt;
+    font-size: 12pt;
 }
 
 /** Tools Panel */
 .lab-Tools-Panel{
 	background-color: #E5E5E5;
-	background-image: url(/imgs/background-tb.png);
+	background-image: url(imgs/background-tb.png);
 	background-position: 0px 0px;
 	padding: 3px;
 }
 .lab-Toolbar {
 	background-color: #E5E5E5;
-    background-image: url(/imgs/background-tb.png);
+    background-image: url(imgs/background-tb.png);
 	background-repeat: repeat-x;
 }
 .lab-Toolbar * {
@@ -95,6 +95,62 @@
 	width: 210px;
 	white-space: nowrap;
 }
-
+.gwt-MenuBar-vertical .gwt-MenuItem-selected{
+	background-color: #D6EBFF;
+}
+.gwt-MenuBar-vertical .gwt-MenuItem span {
+	display: inline-block;
+	padding: 3px;
+	margin-right: 2px;
+}
+.gwt-MenuBar-vertical .gwt-MenuItem span img {
+	vertical-align: text-bottom;
+}
+.gwt-MenuBar-vertical .gwt-MenuItem-Highlighted span {
+	display: inline-block;
+	padding: 2px;
+	border: solid 1px #63A6E7;
+	background-color: #D6E3F7;
+	margin-right: 2px;
+}
+.gwt-MenuBarPopup {
+	z-index: 5;
+}
+.gwt-MenuBarPopup .menuPopupTopCenter {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupBottomCenter {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupMiddleLeft {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupMiddleRight {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupTopLeftInner {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupTopRightInner {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupBottomLeftInner {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupBottomRightInner {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupTopLeft {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupTopRight {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupBottomLeft {
+	display: none;
+}
+.gwt-MenuBarPopup .menuPopupBottomRight {
+	display: none;
+}
 
 
